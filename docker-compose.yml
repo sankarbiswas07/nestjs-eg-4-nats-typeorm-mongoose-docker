@@ -1,0 +1,34 @@
+services:
+  # API gateway service
+  api_gateway:
+    container_name: "api_gateway"
+    build: ./http-api-gateway # This will look for Dockerfile in this folder
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./http-api-gateway/src:/usr/src/app/src # update docker volume on chnage in main.js
+    command: npm run start:dev
+    environment:
+      - PORT=3000
+
+  # Users microservice
+  users_microservice:
+    container_name: "users_microservice"
+    build: ./users-microservice
+    volumes:
+      - ./users-microservice/src:/usr/src/app/src
+    command: npm run start:dev
+
+  # Payments microservice
+  payments_microservice:
+    container_name: "payments_microservice"
+    build: ./payments-microservice
+    volumes:
+      - ./payments-microservice/src:/usr/src/app/src
+    command: npm run start:dev 
+
+  # NATS service setup
+  nats:
+    image: nats
+    ports:
+      - 4222:4222 # external port : internal port
