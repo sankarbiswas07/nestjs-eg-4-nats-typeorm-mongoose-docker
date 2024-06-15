@@ -5,16 +5,18 @@ import {
 
 import {  MessagePattern, Payload } from '@nestjs/microservices';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UsersService } from './users.service';
 
 @Controller()
 export class UsersMicroServiceController {
-  constructor() { }
+  constructor(private usersService: UsersService) { }
 
   @MessagePattern({ cmd: 'createUser' })
   createUser(@Payload() data: CreateUserDto) {
     console.log('-------Create User---------')
     console.log(data);
-    // Return success if valid
-    return { status: 'success', data };
+
+    return this.usersService
+    .createUser(data)
   }
 }
