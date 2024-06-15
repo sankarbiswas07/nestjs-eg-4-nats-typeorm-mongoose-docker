@@ -12,7 +12,9 @@ export class UsersMicroServiceController {
 
   @MessagePattern({ cmd: 'createUser' })
   createUser(@Payload() data: CreateUserDto) {
-    console.log(data)
-    return data
+    console.log('-------Create User---------')
+    console.log(data);
+    // Return success if valid
+    return { status: 'success', data };
   }
 }

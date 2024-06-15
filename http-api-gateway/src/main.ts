@@ -5,15 +5,11 @@ import { ValidationPipe } from '@nestjs/common';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-const validatorOptions  = {
-  forbidUnknownValues:true
-}  
+  const validatorOptions = {
+    forbidUnknownValues: true
+  }
 
-  app.useGlobalPipes(
-    new ValidationPipe(
-      validatorOptions
-    )
-  )
+  app.useGlobalPipes(new ValidationPipe(validatorOptions))
 
   const PORT = process.env.PORT || 3000;
   await app.listen(PORT, () => console.log(`Running on PORT ${PORT}`));
