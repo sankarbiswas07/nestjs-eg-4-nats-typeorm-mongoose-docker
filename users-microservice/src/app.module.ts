@@ -1,21 +1,10 @@
 import { Module } from '@nestjs/common';
 import { UsersModule } from './users/users.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './typeorm/entities/User';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type:'mysql',
-      host: 'mysql_db',
-      port: 3307,
-      database: 'nestjs_db',
-      entities: [User],
-      synchronize: true,
-      username: 'testuser',
-      password: 'test_123',
-
-    }),
+    MongooseModule.forRoot('mongodb://root:password@mongo_db:27017/users_db?authSource=admin', {retryAttempts: 3}),
     UsersModule
   ],
   controllers: [],

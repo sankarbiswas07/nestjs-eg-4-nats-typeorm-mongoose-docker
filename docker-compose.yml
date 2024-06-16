@@ -18,6 +18,34 @@ services:
     volumes:
       - ./users-microservice/src:/usr/src/app/src
     command: npm run start:dev
+    depends_on:
+      - mongo_db
+
+  # Products microservice
+  products_microservice:
+    container_name: "products_microservice"
+    build: ./products-microservice
+    volumes:
+      - ./products-microservice/src:/usr/src/app/src
+    command: npm run start:dev
+    depends_on:
+      - mongo_db
+
+  # Carts microservice
+  carts_microservice:
+    container_name: "carts_microservice"
+    build: ./carts-microservice
+    volumes:
+      - ./carts-microservice/src:/usr/src/app/src
+    command: npm run start:dev
+
+  # Orders microservice
+  orders_microservice:
+    container_name: "orders_microservice"
+    build: ./orders-microservice
+    volumes:
+      - ./orders-microservice/src:/usr/src/app/src
+    command: npm run start:dev
 
   # Payments microservice
   payments_microservice:
@@ -25,7 +53,7 @@ services:
     build: ./payments-microservice
     volumes:
       - ./payments-microservice/src:/usr/src/app/src
-    command: npm run start:dev 
+    command: npm run start:dev
 
   # NATS service setup
   nats:
@@ -51,9 +79,25 @@ services:
   mongo_db:
     image: mongo
     ports:
-      - "27018:27017"
+      - "27027:27017"  # Host port 27017 mapped to container port 27017
     volumes:
       - ./mongo-data:/data/db
     environment:
       - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=example
+      - MONGO_INITDB_ROOT_PASSWORD=password
+
+  # Redis Service
+  redis:
+    image: redis
+    ports:
+      - "6380:6379"
+    volumes:
+      - ./redis-data:/data
+    command: ["redis-server", "--requirepass", "new_password"]
+    environment:
+      - REDIS_PASSWORD=new_password
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "new_password", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3

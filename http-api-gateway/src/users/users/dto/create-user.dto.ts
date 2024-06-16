@@ -11,7 +11,7 @@ export class CreateUserDto {
     @IsNotEmpty()
     @IsString()
     @MaxLength(32)
-    username: string;
+    user_name: string;
 
     @IsNotEmpty()
     @IsEmail()
@@ -20,5 +20,5 @@ export class CreateUserDto {
     @IsOptional()
     @IsString()
     @MaxLength(16)
-    displayName?: string;
+    display_name?: string;
 }

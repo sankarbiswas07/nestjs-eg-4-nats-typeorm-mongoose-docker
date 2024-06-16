@@ -1,21 +1,18 @@
 import { Injectable } from "@nestjs/common";
-import { User } from "src/typeorm/entities/User";
-import { Repository } from "typeorm";
+import { Model } from 'mongoose'
+import { InjectModel } from '@nestjs/mongoose';
 import { CreateUserDto } from "./dto/create-user.dto";
-import { InjectRepository } from "@nestjs/typeorm";
-
+import { User } from "src/schemas/User.schema";
 
 @Injectable()
 export class UsersService {
 
-    constructor(  
-        @InjectRepository(User) private usersRepository: Repository<User>,
+    constructor(
+        @InjectModel(User.name) private userModel: Model<User>,
     ) { }
 
     createUser(createUserDto: CreateUserDto) {
-        const newUser = this.usersRepository.create(createUserDto);
-        return this.usersRepository.save(newUser);
+        const newUser = new this.userModel(createUserDto);
+        return newUser.save();
     }
-
-
 }

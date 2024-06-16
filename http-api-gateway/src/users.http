@@ -5,6 +5,6 @@ POST {{baseUrl}}/users/create
 content-type: application/json
 
 {
-    "username": "Jhon",
+    "user_name": "Jhon",
     "email": "jack.jhon@gmail.com"
 }

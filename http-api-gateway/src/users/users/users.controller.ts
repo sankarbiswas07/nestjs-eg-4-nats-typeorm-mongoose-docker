@@ -30,7 +30,7 @@ export class UsersController {
 
 
   @Post('create')
-  async create(@Body() createUserDto) {
+  async create(@Body() createUserDto: CreateUserDto) {
     try {
       const response = await lastValueFrom(
         this.natsClient.send({ cmd: 'createUser' }, createUserDto)
