@@ -39,10 +39,21 @@ services:
     ports:
       - "3307:3307"
     volumes:
-      - ./mysql_Db:/var/lib/mysql
+      - ./mysql-data:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=root_123
-      - MYSQL_DATABASE=nestjs_db
+      - MYSQL_DATABASE=payments
       - MYSQL_USER=testuser
       - MYSQL_PASSWORD=test_123
       - MYSQL_TCP_PORT=3307
+
+  # MongoDB DB
+  mongo_db:
+    image: mongo
+    ports:
+      - "27018:27017"
+    volumes:
+      - ./mongo-data:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=example

@@ -1,2 +1,3 @@
-/node_modules
-/mysql_Db
+**/**/node_modules
+/mysql-data
+/mongo-data
