@@ -1,22 +1,17 @@
-import {
-  Controller,
-  Inject
-} from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 
-import {  MessagePattern, Payload } from '@nestjs/microservices';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './users.service';
+import { RpcCatch } from 'src/utils/rpc-exception.decorator';
 
 @Controller()
 export class UsersMicroServiceController {
   constructor(private usersService: UsersService) { }
 
   @MessagePattern({ cmd: 'createUser' })
-  createUser(@Payload() data: CreateUserDto) {
-    console.log('-------Create User---------')
-    console.log(data);
-
-    return this.usersService
-    .createUser(data)
+  @RpcCatch()
+  async createUser(@Payload() data: CreateUserDto) {
+      return await this.usersService.createUser(data)
   }
 }

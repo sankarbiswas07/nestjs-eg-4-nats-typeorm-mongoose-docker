@@ -3,6 +3,7 @@ import { Model } from 'mongoose'
 import { InjectModel } from '@nestjs/mongoose';
 import { CreateUserDto } from "./dto/create-user.dto";
 import { User } from "src/schemas/User.schema";
+import { RpcException } from "@nestjs/microservices";
 
 @Injectable()
 export class UsersService {
@@ -11,8 +12,12 @@ export class UsersService {
         @InjectModel(User.name) private userModel: Model<User>,
     ) { }
 
-    createUser(createUserDto: CreateUserDto) {
+    async createUser(createUserDto: CreateUserDto) {
+        const { user_name } = createUserDto
+        const existingUser = await this.userModel.findOne({ user_name })
+        if (existingUser) throw new RpcException('user_name is already exists')
+
         const newUser = new this.userModel(createUserDto);
-        return newUser.save();
+        return await newUser.save();
     }
 }

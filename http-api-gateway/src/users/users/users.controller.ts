@@ -15,6 +15,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ClientProxy } from '@nestjs/microservices';
 import { catchError, lastValueFrom, tap } from 'rxjs';
+import { AsyncWrapper } from 'src/utils/async-wrapper.decorator';
 
 @Controller('users')
 export class UsersController {
@@ -30,34 +31,12 @@ export class UsersController {
 
 
   @Post('create')
+  @AsyncWrapper()
   async create(@Body() createUserDto: CreateUserDto) {
-    try {
-      const response = await lastValueFrom(
-        this.natsClient.send({ cmd: 'createUser' }, createUserDto)
-      );
-
-      if (response.status === 'error') {
-        throw new HttpException(response, HttpStatus.BAD_REQUEST);
-      }
-
-      return response;
-    } catch (error) {
-      console.error('Error from microservice:', error);
-
-      // Check if the error has a status and message for structured response
-      if (error.status && error.message) {
-        throw new HttpException(
-          { status: 'error', message: error.message, errors: error.errors },
-          HttpStatus.BAD_REQUEST
-        );
-      }
-
-      // Fallback for unexpected errors
-      throw new HttpException(
-        { status: 'error', message: 'Internal server error' },
-        HttpStatus.INTERNAL_SERVER_ERROR
-      );
-    }
+    const response = await lastValueFrom(
+      this.natsClient.send({ cmd: 'createUser' }, createUserDto)
+    );
+    return response;
   }
 
   @Get()
