@@ -1,7 +1,6 @@
 import {
     ArgumentsHost,
     Catch,
-    HttpStatus,
     RpcExceptionFilter,
 } from '@nestjs/common';
 
@@ -22,7 +21,7 @@ export class RpcExceptionGlobalFilter implements RpcExceptionFilter<RpcException
         const data = ctx.getData();
         const errorDetails = extractRpcError(exception.getError());
 
-        return throwError(() => ({
+        const payload = {
             status: 'error',
             message: errorDetails.message,
             error: {
@@ -30,6 +29,10 @@ export class RpcExceptionGlobalFilter implements RpcExceptionFilter<RpcException
                 propertyKey: errorDetails.propertyKey,
                 stack: exception?.stack,
             },  // Include the request data if needed for debugging
-        }));
+        }
+
+        console.log(payload)
+
+        return throwError(() => payload);
     }
 }

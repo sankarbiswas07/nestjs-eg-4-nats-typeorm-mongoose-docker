@@ -21,4 +21,8 @@ export class CreateUserDto {
     @IsString()
     @MaxLength(16)
     display_name?: string;
+
+    @IsOptional()
+    @IsString()
+    avatar_url?: string;
 }

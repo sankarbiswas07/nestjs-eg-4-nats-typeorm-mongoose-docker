@@ -24,4 +24,8 @@ export class CreateUserDto {
     @IsOptional()
     @IsString()
     avatar_url?: string;
+
+    @IsOptional()
+    @IsString()
+    status: string = 'inactive'; // default inactive
 }

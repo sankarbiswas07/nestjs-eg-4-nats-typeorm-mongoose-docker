@@ -1,22 +1,31 @@
 import {
     IsEmail,
+    IsNotEmpty,
     IsOptional,
     IsString,
     MaxLength
 } from "class-validator";
 
 export class UpdateUserDto {
-    @IsOptional()
+    @IsNotEmpty()
     @IsString()
     @MaxLength(32)
-    username: string;
+    user_name: string;
 
-    @IsOptional()
+    @IsNotEmpty()
     @IsEmail()
     email: string;
 
     @IsOptional()
     @IsString()
     @MaxLength(16)
-    displayName?: string;
+    display_name?: string;
+
+    @IsOptional()
+    @IsString()
+    avatar_url?: string;
+
+    @IsOptional()
+    @IsString()
+    status: string = 'inactive'; // default inactive
 }

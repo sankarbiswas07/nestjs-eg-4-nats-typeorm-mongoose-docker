@@ -23,7 +23,7 @@ export class ShippingAddress {
     zip: string
 
     @Prop({ required: false, default: false })
-    isDefault?: string
+    isDefault?: boolean
 
 };
 export const ShippingAddressSchema = SchemaFactory.createForClass(ShippingAddress);
