@@ -12,7 +12,7 @@ import {
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ClientProxy } from '@nestjs/microservices';
-import { catchError, lastValueFrom, tap } from 'rxjs';
+import { lastValueFrom } from 'rxjs';
 import { AsyncWrapper } from 'src/utils/async-wrapper.decorator';
 import { QueryUsersDto } from './dto/query-users.dto';
 

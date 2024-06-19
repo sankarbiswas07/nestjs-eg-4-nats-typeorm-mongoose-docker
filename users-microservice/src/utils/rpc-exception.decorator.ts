@@ -4,7 +4,6 @@ export function RpcCatch() {
   return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
     const originalMethod = descriptor.value;
     descriptor.value = async function (...args: any[]) {
-
       console.log(`@RpcCatch: user-service : ${propertyKey}`)
       try {
         return await originalMethod.apply(this, args);
