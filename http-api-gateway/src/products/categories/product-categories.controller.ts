@@ -4,13 +4,15 @@ import { UpdateProductCategoryDto } from './dto/update-product-category.dto';
 import { QueryProductCategoriesDto } from './dto/query-product-categories.dto';
 import { ClientProxy } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
+import { AsyncWrapper } from 'src/utils/async-wrapper.decorator';
 
-@Controller('categories')
+@Controller()
 export class ProductCategoriesController {
   constructor(@Inject('NATS_SERVICE') private natsClient: ClientProxy) { }
 
 
   @Post('create')
+  @AsyncWrapper()
   async create(@Body() createCategoryDto: CreateProductCategoryDto) {
     return await lastValueFrom(
       this.natsClient.send({ cmd: 'createProductCategory' }, createCategoryDto)
@@ -18,6 +20,7 @@ export class ProductCategoriesController {
   }
 
   @Get(':id')
+  @AsyncWrapper()
   async findOne(@Param('id') id: string) {
     return await lastValueFrom(
       this.natsClient.send({ cmd: 'getProductCategory' }, { id })
@@ -25,6 +28,7 @@ export class ProductCategoriesController {
   }
 
   @Get()
+  @AsyncWrapper()
   async findAll(@Query() queryProductCategoriesDto: QueryProductCategoriesDto) {
     return await lastValueFrom(
       this.natsClient.send({ cmd: 'getAllCategories' }, {queryProductCategoriesDto})
@@ -32,6 +36,7 @@ export class ProductCategoriesController {
   }
 
   @Patch(':id')
+  @AsyncWrapper()
   async update(@Param('id') id: string, @Body() updateCategoryDto: UpdateProductCategoryDto) {
     return await lastValueFrom(
       this.natsClient.send({ cmd: 'updateCategory' }, { id, updateCategoryDto })

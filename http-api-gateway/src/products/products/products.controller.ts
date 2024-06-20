@@ -4,6 +4,7 @@ import { lastValueFrom } from 'rxjs';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { QueryProductsDto } from './dto/query-products.dto';
+import { AsyncWrapper } from 'src/utils/async-wrapper.decorator';
 
 @Controller()
 export class ProductsController {
@@ -11,6 +12,7 @@ export class ProductsController {
 
 
   @Post('create')
+  @AsyncWrapper()
   async create(@Body() createProductDto: CreateProductDto) {
     return await lastValueFrom(
       this.natsClient.send({ cmd: 'createProduct' }, createProductDto)
@@ -18,6 +20,7 @@ export class ProductsController {
   }
 
   @Get(':id')
+  @AsyncWrapper()
   async findOne(@Param('id') id: string) {
     return await lastValueFrom(
       this.natsClient.send({ cmd: 'getProduct' }, { id })
@@ -25,6 +28,7 @@ export class ProductsController {
   }
 
   @Get()
+  @AsyncWrapper()
   async findAll(@Query() queryProductsDto: QueryProductsDto) {
     return await lastValueFrom(
       this.natsClient.send({ cmd: 'getAllCategories' }, {queryProductsDto})
@@ -32,6 +36,7 @@ export class ProductsController {
   }
 
   @Patch(':id')
+  @AsyncWrapper()
   async update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
     return await lastValueFrom(
       this.natsClient.send({ cmd: 'updateProduct' }, { id, updateProductDto })
