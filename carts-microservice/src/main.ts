@@ -8,7 +8,7 @@ function extractConstraintValues(errors: ValidationError[]): string[] {
 }
 
 async function bootstrap() {
-  console.log('Users Microservice is Running!');
+  console.log('Carts Microservice is Running!');
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
     AppModule,
     {

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { UsersModule } from './UserProductOrders/user-product-orders.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserProductOrderPayment } from './typeorm/entities/UserProductOrder';
+import { UserProductOrder } from './typeorm/entities/UserProductOrder';
 
 @Module({
   imports: [
@@ -9,8 +9,8 @@ import { UserProductOrderPayment } from './typeorm/entities/UserProductOrder';
       type:'mysql',
       host: 'mysql_db',
       port: 3307,
-      database: 'nestjs_db',
-      entities: [UserProductOrderPayment],
+      database: 'orders_management',
+      entities: [UserProductOrder],
       synchronize: true,
       username: 'testuser',
       password: 'test_123',

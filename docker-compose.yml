@@ -10,6 +10,8 @@ services:
     command: npm run start:dev
     environment:
       - PORT=3000
+    depends_on:
+      - nats
 
   # Users microservice
   users_microservice:
@@ -20,6 +22,7 @@ services:
     command: npm run start:dev
     depends_on:
       - mongo_db
+      - nats
 
   # Products microservice
   products_microservice:
@@ -30,6 +33,7 @@ services:
     command: npm run start:dev
     depends_on:
       - mongo_db
+      - nats
 
   # Carts microservice
   carts_microservice:
@@ -37,7 +41,10 @@ services:
     build: ./carts-microservice
     volumes:
       - ./carts-microservice/src:/usr/src/app/src
-    command: npm run start:dev
+    command: npm run start:debug
+    depends_on:
+      - redis
+      - nats
 
   # Orders microservice
   orders_microservice:
@@ -46,7 +53,10 @@ services:
     volumes:
       - ./orders-microservice/src:/usr/src/app/src
     command: npm run start:dev
-
+    depends_on:
+      - redis
+      - nats
+    
   # Payments microservice
   payments_microservice:
     container_name: "payments_microservice"

@@ -1,22 +1,21 @@
 import { Module } from '@nestjs/common';
-import { UsersModule } from './users/users.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './typeorm/entities/User';
+import type { RedisClientOptions } from 'redis';
+import * as redisStore from 'cache-manager-redis-store';
+import { CacheModule } from '@nestjs/cache-manager';
+import { CartsModule } from './my-carts/carts.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type:'mysql',
-      host: 'mysql_db',
-      port: 3307,
-      database: 'nestjs_db',
-      entities: [User],
-      synchronize: true,
-      username: 'testuser',
-      password: 'test_123',
-
+    CacheModule.register<RedisClientOptions>({
+      store: redisStore,
+      url: 'redis://:new_password@redis:6379',
+      isGlobal: true, // Make cache globally available
+      // Additional options
+      // ttl: 600, // Time to live in seconds
+      // max: 100, // Maximum number of items in cache
+      // Retry strategy or other options can also be added here
     }),
-    UsersModule
+    CartsModule
   ],
   controllers: [],
   providers: [],

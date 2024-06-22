@@ -16,7 +16,7 @@ import { lastValueFrom } from 'rxjs';
 import { AsyncWrapper } from 'src/utils/async-wrapper.decorator';
 import { QueryUsersDto } from './dto/query-users.dto';
 
-@Controller('users')
+@Controller()
 export class UsersController {
   constructor(@Inject('NATS_SERVICE') private natsClient: ClientProxy) { }
 
