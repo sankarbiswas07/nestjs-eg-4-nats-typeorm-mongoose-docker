@@ -6,11 +6,13 @@ import { CartsModule } from './users/carts/carts.module';
 
 import { ProductsModule } from './products/products/products.module';
 import { ProductCategoriesModule } from './products/categories/product-categories.module';
+import { OrdersModule } from './users/orders/orders.module';
 
 @Module({
   imports: [
     UsersModule,
     CartsModule,
+    OrdersModule,
     RouterModule.register([
       {
         path: 'users',
@@ -19,7 +21,11 @@ import { ProductCategoriesModule } from './products/categories/product-categorie
           {
             path: 'carts',
             module: CartsModule,
-          }
+          },
+          {
+            path: 'orders',
+            module: OrdersModule,
+          },
         ],
       },
     ]),

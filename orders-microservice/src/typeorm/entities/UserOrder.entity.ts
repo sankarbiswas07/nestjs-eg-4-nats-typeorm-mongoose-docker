@@ -1,0 +1,68 @@
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+
+@Entity({ name: 'user-orders' })
+export class UserOrders {
+
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
+
+    // Entity: products
+    @Column({ nullable: false })
+    product_id: string;
+
+    @Column({ nullable: false, length: 8 })
+    product_sku: string;
+
+    @Column({ nullable: false })
+    product_name: string;
+
+    @Column({ nullable: true })
+    description?: string;
+
+    // Array of categories this product belongs to
+    categories_uuids?: string[];
+
+    @Column({ nullable: false })
+    mrp: number; // for eg. mrp = max retail price, incl. GST
+
+    @Column({ nullable: false, default: 0, type: 'int' })
+    stockQty: number;
+
+    @Column({ nullable: false, default: 'pieces' })
+    stockType?: string;
+
+    @Column({ nullable: true })
+    image_urls?: string;
+
+    // Entity: user
+    @Column({ nullable: false })
+    user_id: string;
+
+    @Column({ nullable: false })
+    user_name: string;
+
+    @Column({ nullable: false, })
+    display_name?: string;
+
+    @Column({ nullable: false, })
+    avatar_url?: string;
+
+    // Entity: shipping
+    @Column({ nullable: false, })
+    shipping_id: string
+
+    @Column({ nullable: false, })
+    shipping_name: string
+
+    @Column({ nullable: false, })
+    shipping_phone: string
+
+    @Column({ nullable: false, })
+    shipping_line_1: string
+
+    @Column({ nullable: true, })
+    shipping_landmark?: string
+
+    @Column({ nullable: false, })
+    shipping_state: string
+}

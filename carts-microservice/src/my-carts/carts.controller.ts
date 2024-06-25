@@ -4,7 +4,7 @@ import { CartsService } from './carts.service';
 import { AddToCartDto, RemoveFromCartDto } from './dto/cart-item.dto';
 
 @Controller()
-export class CartsController {
+export class CartsMicroServiceController {
   constructor(private readonly cartService: CartsService) {}
 
   @MessagePattern({ cmd: 'addToMyCart' })

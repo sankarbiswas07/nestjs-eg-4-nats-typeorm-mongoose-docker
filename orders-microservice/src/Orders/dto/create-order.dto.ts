@@ -1,19 +1,18 @@
-import { IsEnum, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
 import { OrderPaymentStatus } from 'src/utils/type-helper';
-// Replace with actual path
 
-export class CreateUserProductOrderPaymentDto {
-  @IsNotEmpty()
-  @IsString()
-  order_id: string; // Use snake_case for DTO properties
-
+export class CreateOrderDto {
   @IsNotEmpty()
   @IsString()
   user_id: string;
 
   @IsNotEmpty()
-  @IsNumber()
-  price: number;
+  @IsString()
+  shipping_id: string;
+
+  @IsNotEmpty()
+  @IsString()
+  product_id: string;
 
   @IsNotEmpty()
   @IsEnum(OrderPaymentStatus) // Validate against OrderPaymentStatus enum

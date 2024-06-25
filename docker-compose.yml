@@ -46,6 +46,7 @@ services:
       - redis
       - nats
 
+
   # Orders microservice
   orders_microservice:
     container_name: "orders_microservice"
@@ -56,38 +57,62 @@ services:
     depends_on:
       - redis
       - nats
+      - mysql_db
     
   # Payments microservice
-  payments_microservice:
-    container_name: "payments_microservice"
-    build: ./payments-microservice
-    volumes:
-      - ./payments-microservice/src:/usr/src/app/src
-    command: npm run start:dev
+  # payments_microservice:
+  #   container_name: "payments_microservice"
+  #   build: ./payments-microservice
+  #   volumes:
+  #     - ./payments-microservice/src:/usr/src/app/src
+  #   command: npm run start:dev
 
   # NATS service setup
   nats:
     image: nats
+    container_name: nats_container
     ports:
       - 4222:4222 # external port : internal port
 
   # MySQL DB
   mysql_db:
-    image: mysql
+    build:
+      context: infra/mysql_db/
+      dockerfile: Dockerfile
+    container_name: mysql_db_container
+    restart: always
     ports:
-      - "3307:3307"
+      - "3306:3306"
     volumes:
       - ./mysql-data:/var/lib/mysql
+    # environment:
+    #   - MYSQL_ROOT_PASSWORD=root_123
+    #   - MYSQL_USER=test_user
+    #   - MYSQL_DATABASE=orders_management
+    #   - MYSQL_PASSWORD=test_pwd
+    #   - MYSQL_TCP_PORT=3306
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # phpmyadmin
+  phpmyadmin:
+    depends_on:
+      - mysql_db
+    image: phpmyadmin
+    restart: always
+    ports:
+      - "8090:80"
     environment:
-      - MYSQL_ROOT_PASSWORD=root_123
-      - MYSQL_DATABASE=payments
-      - MYSQL_USER=testuser
-      - MYSQL_PASSWORD=test_123
-      - MYSQL_TCP_PORT=3307
+      PMA_HOST: mysql_db
+      MYSQL_ROOT_PASSWORD: test_pwd
 
   # MongoDB DB
   mongo_db:
     image: mongo
+    container_name: mongo_db_container
     ports:
       - "27027:27017"  # Host port 27017 mapped to container port 27017
     volumes:
@@ -99,6 +124,7 @@ services:
   # Redis Service
   redis:
     image: redis
+    container_name: redis_container
     ports:
       - "6380:6379"
     volumes:

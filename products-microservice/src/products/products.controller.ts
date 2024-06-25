@@ -7,7 +7,7 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { QueryProductsDto } from './dto/query-products.dto';
 
 @Controller()
-export class ProductMicroServiceController {
+export class ProductsMicroServiceController {
   constructor(private readonly productService: ProductService) {}
 
   @MessagePattern({ cmd: 'createProduct' })

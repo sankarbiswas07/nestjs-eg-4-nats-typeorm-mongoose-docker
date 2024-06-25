@@ -12,3 +12,5 @@ Setup new microservice? here are some quick cmd line-
 
  5. Validation : `npm i class-validator class-transformer`
 
+
+Service names: `nats mysql_db phpmyadmin mongo_db redis api_gateway users_microservice products_microservice carts_microservice orders_microservice `

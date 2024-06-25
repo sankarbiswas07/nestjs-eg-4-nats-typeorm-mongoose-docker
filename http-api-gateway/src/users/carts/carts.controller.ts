@@ -6,7 +6,7 @@ import { RemoveFromCartDto } from './dto/remove-from-cart.dto';
 import { UserCartDto } from './dto/user-cart.dto';
 import { AsyncWrapper } from 'src/utils/async-wrapper.decorator';
 
-@Controller('carts')
+@Controller()
 export class CartsController {
   constructor(@Inject('NATS_SERVICE') private natsClient: ClientProxy) {}
 

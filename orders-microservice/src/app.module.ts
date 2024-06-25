@@ -1,22 +1,22 @@
 import { Module } from '@nestjs/common';
-import { UsersModule } from './UserProductOrders/user-product-orders.module';
+import { OrdersModule } from './Orders/orders.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserProductOrder } from './typeorm/entities/UserProductOrder';
+import { UserOrders } from './typeorm/entities/UserOrder.entity';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type:'mysql',
       host: 'mysql_db',
-      port: 3307,
+      port: 3306,
       database: 'orders_management',
-      entities: [UserProductOrder],
+      entities: [UserOrders],
       synchronize: true,
-      username: 'testuser',
-      password: 'test_123',
+      username: 'test_user',
+      password: 'test_pwd',
 
     }),
-    UsersModule
+    OrdersModule
   ],
   controllers: [],
   providers: [],
