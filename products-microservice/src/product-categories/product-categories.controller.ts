@@ -6,7 +6,7 @@ import { CreateProductCategoryDto } from './dto/create-product-category.dto';
 import { UpdateProductCategoryDto } from './dto/update-product-category.dto';
 import { QueryProductCategoriesDto } from './dto/query-product-categories.dto';
 
-@Controller('product-categories')
+@Controller()
 export class ProductCategoriesMicroServiceController {
   constructor(private readonly productCategoryService: ProductCategoryService) { }
 

@@ -3,14 +3,14 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ProductCategoriesMicroServiceController } from './product-categories.controller';
 import { NatsClientModule } from 'src/nats-client/nats-client.module';
 import { ProductCategoryService } from './product-categories.service';
-import {Product, ProductSchema} from '../schemas/Product.schema'
+import { ProductCategory, ProductCategorySchema } from 'src/schemas/ProductCategory.schema';
 
 @Module({
   imports:[
     MongooseModule.forFeature([
       {
-        name: Product.name,
-        schema: ProductSchema,
+        name: ProductCategory.name,
+        schema: ProductCategorySchema,
       },
     ]),
     NatsClientModule
@@ -18,4 +18,4 @@ import {Product, ProductSchema} from '../schemas/Product.schema'
   controllers: [ProductCategoriesMicroServiceController],
   providers: [ProductCategoryService],
 })
-export class ProductsModule {}
+export class ProductCategoriesModule {}

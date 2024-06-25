@@ -32,7 +32,7 @@ export class OrdersController {
   @AsyncWrapper()
   async findAll(@Query() queryOrdersDto: GetOrdersDto) {
     return await lastValueFrom(
-      this.natsClient.send({ cmd: 'getMyOrders' }, {queryOrdersDto})
+      this.natsClient.send({ cmd: 'getMyOrders' }, {...queryOrdersDto})
     );
   }
 

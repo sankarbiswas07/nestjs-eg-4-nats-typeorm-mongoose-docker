@@ -4,6 +4,7 @@ import { Document, Types } from 'mongoose';
 export type ProductDocument = Product & Document;
 
 @Schema({ collection: 'products' })
+
 export class Product {
 
     @Prop({ required: true, maxlength: 8 })

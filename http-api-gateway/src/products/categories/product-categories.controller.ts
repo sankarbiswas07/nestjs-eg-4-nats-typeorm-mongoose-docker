@@ -31,7 +31,7 @@ export class ProductCategoriesController {
   @AsyncWrapper()
   async findAll(@Query() queryProductCategoriesDto: QueryProductCategoriesDto) {
     return await lastValueFrom(
-      this.natsClient.send({ cmd: 'getAllCategories' }, {queryProductCategoriesDto})
+      this.natsClient.send({ cmd: 'getProductCategories' }, {...queryProductCategoriesDto})
     );
   }
 

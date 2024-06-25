@@ -6,7 +6,7 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { QueryProductsDto } from './dto/query-products.dto';
 import { AsyncWrapper } from 'src/utils/async-wrapper.decorator';
 
-@Controller()
+@Controller('products')
 export class ProductsController {
   constructor(@Inject('NATS_SERVICE') private natsClient: ClientProxy) { }
 
@@ -31,7 +31,7 @@ export class ProductsController {
   @AsyncWrapper()
   async findAll(@Query() queryProductsDto: QueryProductsDto) {
     return await lastValueFrom(
-      this.natsClient.send({ cmd: 'getAllCategories' }, {queryProductsDto})
+      this.natsClient.send({ cmd: 'getProducts' }, {...queryProductsDto})
     );
   }
 
