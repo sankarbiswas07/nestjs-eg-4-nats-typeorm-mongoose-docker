@@ -1,5 +1,6 @@
 export enum StockQtyUnitStatus {
     PIECES = 'pieces',
+    PAIR = 'pair',
     KG= 'kg'
 }
 

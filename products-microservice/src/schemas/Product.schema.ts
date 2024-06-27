@@ -7,7 +7,7 @@ export type ProductDocument = Product & Document;
 
 export class Product {
 
-    @Prop({ required: true, maxlength: 8 })
+    @Prop({ required: true, unique:true, maxlength: 8 })
     product_sku: string;
 
     @Prop({ required: true })

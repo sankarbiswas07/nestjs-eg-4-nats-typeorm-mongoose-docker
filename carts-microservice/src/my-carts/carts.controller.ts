@@ -1,7 +1,7 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { CartsService } from './carts.service';
-import { AddToCartDto, RemoveFromCartDto } from './dto/cart-item.dto';
+import { AddToCartWithUserDto, RemoveItemFromCartDto } from './dto/cart-item.dto';
 import { RpcCatch } from 'src/utils/rpc-exception.decorator';
 
 @Controller()
@@ -10,15 +10,22 @@ export class CartsMicroServiceController {
 
   @MessagePattern({ cmd: 'addToMyCart' })
   @RpcCatch()
-  async addToMyCart(@Payload() data: { userId: string; item: AddToCartDto }) {
-    await this.cartService.addToCart(data.userId, data.item);
+  async addToMyCart(@Payload() addToCartWithUserDto: AddToCartWithUserDto) {
+    console.log("hi from add to my cart");
+
+    const { userId, ...product } = addToCartWithUserDto
+
+    await this.cartService.addToCart(userId, { ...product, userId });
     return 'Item added to cart';
   }
 
   @MessagePattern({ cmd: 'removeFromMyCart' })
   @RpcCatch()
-  async removeFromMyCart(@Payload() data: { userId: string; item: RemoveFromCartDto }) {
-    await this.cartService.removeFromCart(data.userId, data.item);
+  async removeFromMyCart(@Payload() removeItemFromCartDto: RemoveItemFromCartDto) {
+
+    const { userId, product_sku } = removeItemFromCartDto
+
+    await this.cartService.removeFromCart(userId, { product_sku });
     return 'Item removed from cart';
   }
 

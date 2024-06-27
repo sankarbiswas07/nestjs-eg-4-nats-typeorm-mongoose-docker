@@ -1,7 +1,8 @@
 import { IsNotEmpty, IsString, MaxLength, IsNumber, 
   IsInt, IsOptional, IsArray, IsMongoId } from 'class-validator';
 
-export class AddToCartDto {
+export class Product {
+
   @IsNotEmpty()
   @IsString()
   @MaxLength(8)
@@ -26,7 +27,7 @@ export class AddToCartDto {
 
   @IsNotEmpty()
   @IsInt()
-  stockQty: number;
+  orderQty: number;
 
   @IsOptional()
   @IsString()
@@ -38,9 +39,23 @@ export class AddToCartDto {
   image_urls?: string;
 }
 
-export class RemoveFromCartDto {
+// Extended DTO
+export class AddToCartWithUserDto extends Product {
+  @IsNotEmpty()
+  @IsString()
+  userId: string;
+}
+
+export class ProductSkuInObj {
   @IsNotEmpty()
   @IsString()
   @MaxLength(8)
   product_sku: string;
+}
+
+// Extended DTO
+export class RemoveItemFromCartDto extends ProductSkuInObj {
+  @IsNotEmpty()
+  @IsString()
+  userId: string;
 }
