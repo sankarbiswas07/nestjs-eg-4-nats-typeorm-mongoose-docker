@@ -12,7 +12,6 @@ export class CartsService {
   private cartKey = (userId: string) => `cart:${userId}`;
 
   async getCart(userId: string): Promise<any> {
-    console.log(userId)
     const cart = await this.cacheManager.get(this.cartKey(userId));
     console.log(cart)
     return cart ? JSON.parse(cart as string) : [];

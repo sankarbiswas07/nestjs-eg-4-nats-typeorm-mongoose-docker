@@ -1,24 +1,24 @@
 import { Module } from '@nestjs/common';
-import type { RedisClientOptions } from 'redis';
-import * as redisStore from 'cache-manager-redis-store';
-import { CacheModule } from '@nestjs/cache-manager';
-
+import { redisStore } from 'cache-manager-redis-store';
+import { CacheModule, CacheModuleOptions } from '@nestjs/cache-manager';
 import { CartsModule } from './my-carts/carts.module';
 
 @Module({
   imports: [
-    CacheModule.register<RedisClientOptions>({
+    CacheModule.registerAsync<CacheModuleOptions>({
       isGlobal: true,
-      // if you use redis
-      useFactory: async () => ({
-        store: redisStore.redisStore,
-        host: "redis",
-        password: "new_password",
-        port: 6379,
-        ttl: 0
-      }),
+      useFactory: async () => {
+        const store = await redisStore({
+          socket: {
+            host: 'redis', // default value
+            port: 6379, // default value
+          },
+          password: 'new_password',
+        });
+        return { store };
+      },
     }),
-    CartsModule
+    CartsModule,
   ],
   controllers: [],
   providers: [],
