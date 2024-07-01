@@ -27,9 +27,9 @@ export class UsersService {
         return await newUser.save();
     }
 
-    async getUser(userId: string) {
+    async getUser(user_id: string) {
         return await this.userModel
-        .findById(this.getObjectId(userId))
+        .findById(this.getObjectId(user_id))
         .populate('shipping_addresses').exec();
     }
 
@@ -47,8 +47,8 @@ export class UsersService {
         return await this.userModel.find(filter).exec();
     }
 
-    async updateUser(userId: string, updateUserDto: Partial<User>) {
-        const existingUser = await this.userModel.findById(this.getObjectId(userId));
+    async updateUser(user_id: string, updateUserDto: Partial<User>) {
+        const existingUser = await this.userModel.findById(this.getObjectId(user_id));
         if (!existingUser) {
             throw new RpcException('User not found');
         }
@@ -58,8 +58,8 @@ export class UsersService {
     }
 
 
-    async updateUserAddress(userId: string, s_addresses: string) {
-        const existingUser = await this.userModel.findById(this.getObjectId(userId));
+    async updateUserAddress(user_id: string, s_addresses: string) {
+        const existingUser = await this.userModel.findById(this.getObjectId(user_id));
         if (!existingUser) {
             throw new RpcException('User not found');
         }

@@ -1,5 +1,6 @@
 import { IsNotEmpty, IsString, MaxLength, IsNumber, IsInt,
-     IsOptional, IsArray, IsMongoId } from 'class-validator';
+     IsOptional, IsArray, IsMongoId, 
+     IsBoolean} from 'class-validator';
 
 export class AddToCartDto {
   @IsNotEmpty()
@@ -26,12 +27,12 @@ export class AddToCartDto {
 
   @IsNotEmpty()
   @IsInt()
-  stockQty: number;
+  stock_qty: number;
 
   @IsOptional()
   @IsString()
   @MaxLength(50)
-  stockType?: string;
+  stock_type?: string;
 
   @IsOptional()
   @IsString()
@@ -41,3 +42,43 @@ export class AddToCartDto {
   @IsString()
   user_id: string;
 }
+
+// Extended DTO User and Shipping Address
+export class CreateOrderViaCartDto extends AddToCartDto {
+  @IsNotEmpty()
+  @IsString()
+  user_id: string;
+
+  @IsString()
+  @IsNotEmpty()
+  display_name: string; // user's or buyer display name
+
+  @IsString()
+  @IsNotEmpty()
+  name: string; // c/o address name
+
+  @IsString()
+  @IsNotEmpty()
+  phone: string;
+
+  @IsString()
+  @IsNotEmpty()
+  line_1: string;
+
+  @IsString()
+  @IsOptional()
+  landmark?: string;
+
+  @IsBoolean()
+  @IsOptional()
+  skippedCart?: boolean = false;
+
+  @IsString()
+  @IsNotEmpty()
+  state: string;
+
+  @IsString()
+  @IsNotEmpty()
+  zip: string;
+}
+

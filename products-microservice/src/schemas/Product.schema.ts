@@ -23,10 +23,10 @@ export class Product {
     mrp: number;
 
     @Prop({ required: true, default: 0 })
-    stockQty: number;
+    stock_qty: number;
 
     @Prop({ required: true, default: 'pieces' })
-    stockType?: string;
+    stock_type?: string;
 
     @Prop()
     image_urls?: string;

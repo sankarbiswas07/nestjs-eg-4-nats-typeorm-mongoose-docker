@@ -1,7 +1,7 @@
-import { Controller } from '@nestjs/common';
-import {  MessagePattern, Payload } from '@nestjs/microservices';
+import { Controller, Inject } from '@nestjs/common';
+import {  ClientProxy, MessagePattern, Payload } from '@nestjs/microservices';
 
-import { CreateOrderDto } from './dto/create-order.dto';
+import { CreateOrderViaCartDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { GetOrdersDto } from './dto/get-orders.dto';
 import { GetOrderDto } from './dto/get-order.dto';
@@ -11,13 +11,25 @@ import { OrdersService } from './orders.service';
 @Controller()
 export class OrdersMicroserviceController {
   constructor(
-    private readonly ordersService: OrdersService
+    private readonly ordersService: OrdersService,
+    @Inject('NATS_SERVICE') private natsClient: ClientProxy
   ) {}
 
   @MessagePattern({ cmd: 'createMyOrder' })
   @RpcCatch()
-  async createOrder(@Payload() createOrderDto: CreateOrderDto) {
-    return this.ordersService.createOrder(createOrderDto);
+  async createOrder(@Payload() createOrderDto: CreateOrderViaCartDto) {
+
+    const {skippedCart, ...orderDoc} = createOrderDto
+
+    if(skippedCart){
+      this.natsClient.send({ cmd: 'addToMyCart' }, createOrderDto)
+    }
+
+    const newOrder = await this.ordersService.createOrder(orderDoc);
+    if(newOrder){
+      this.natsClient.emit('newOrderCreated', newOrder)
+    }
+    return newOrder
   }
 
   @MessagePattern({ cmd: 'updateMyOrder' })

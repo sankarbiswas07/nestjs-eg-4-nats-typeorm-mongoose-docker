@@ -12,7 +12,7 @@ export class CartsController {
 
   @Post('add')
   @AsyncWrapper()
-  async addToMyCart(@Body() data: { userId: string; item: AddToCartDto }) {
+  async addToMyCart(@Body() data: { user_id: string; item: AddToCartDto }) {
     const response = await lastValueFrom(
       this.natsClient.send({ cmd: 'addToMyCart' }, data)
     );
@@ -21,18 +21,18 @@ export class CartsController {
 
   @Post('remove')
   @AsyncWrapper()
-  async removeFromMyCart(@Body() data: { userId: string; item: RemoveFromCartDto }) {
+  async removeFromMyCart(@Body() data: { user_id: string; item: RemoveFromCartDto }) {
     const response = await lastValueFrom(
       this.natsClient.send({ cmd: 'removeFromMyCart' }, data)
     );
     return response;
   }
 
-  @Get(':userId')
+  @Get(':user_id')
   @AsyncWrapper()
-  async getMyCart(@Param('userId') userId: string) {
+  async getMyCart(@Param('user_id') user_id: string) {
     const response = await lastValueFrom(
-      this.natsClient.send({ cmd: 'getMyCart' }, userId)
+      this.natsClient.send({ cmd: 'getMyCart' }, user_id)
     );
     return response;
   }

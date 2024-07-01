@@ -27,10 +27,10 @@ export class UserOrders {
     mrp: number; // for eg. mrp = max retail price, incl. GST
 
     @Column({ nullable: false, default: 0, type: 'int' })
-    stockQty: number;
+    stock_qty: number;
 
     @Column({ nullable: true, default: 'pieces' })
-    stockType?: string;
+    stock_type?: string;
 
     @Column({ nullable: true })
     image_urls?: string;

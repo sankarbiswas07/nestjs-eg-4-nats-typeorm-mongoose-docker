@@ -1,4 +1,4 @@
-export enum StockQtyUnitStatus {
+export enum stockQtyUnitStatus {
     PIECES = 'pieces',
     PAIR = 'pair',
     KG= 'kg'

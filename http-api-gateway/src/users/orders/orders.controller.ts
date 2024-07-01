@@ -1,7 +1,7 @@
 import { Controller, Post, Body, Get, Param, Patch, Query, Inject } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
-import { CreateOrderDto } from './dto/create-order.dto';
+import { CreateOrderViaCartDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { GetOrdersDto } from './dto/get-orders.dto';
 import { GetOrderDto } from './dto/get-order.dto';
@@ -14,7 +14,9 @@ export class OrdersController {
 
   @Post('create')
   @AsyncWrapper()
-  async create(@Body() createOrderDto: CreateOrderDto) {
+  async create(@Body() createOrderDto: CreateOrderViaCartDto) {
+
+    console.log(createOrderDto)
     return await lastValueFrom(
       this.natsClient.send({ cmd: 'createMyOrder' }, createOrderDto)
     );

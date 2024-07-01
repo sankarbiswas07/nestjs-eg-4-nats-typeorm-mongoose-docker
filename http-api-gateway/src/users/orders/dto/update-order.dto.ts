@@ -30,11 +30,11 @@ export class UpdateOrderDto {
 
   @IsOptional()
   @IsInt()
-  stockQty?: number;
+  stock_qty?: number;
 
   @IsOptional()
   @IsString()
-  stockType?: string;
+  stock_type?: string;
 
   @IsOptional()
   @IsString()

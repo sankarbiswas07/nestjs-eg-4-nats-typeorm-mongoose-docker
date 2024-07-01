@@ -21,16 +21,16 @@ export class UsersMicroServiceController {
   @MessagePattern({ cmd: 'updateUser' })
   @RpcCatch()
   async updateUser(
-    @Payload() userId: string,
+    @Payload() user_id: string,
     @Payload() UpdateUserDto: Partial<User>
   ) {
-    return await this.usersService.updateUser(userId, UpdateUserDto)
+    return await this.usersService.updateUser(user_id, UpdateUserDto)
   }
 
   @MessagePattern({ cmd: 'getUser' })
   @RpcCatch()
-  async getUser(@Payload() userId: string) {
-    return await this.usersService.getUser(userId)
+  async getUser(@Payload() user_id: string) {
+    return await this.usersService.getUser(user_id)
   }
 
   @MessagePattern({ cmd: 'getUsers' })

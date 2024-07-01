@@ -28,16 +28,16 @@ export class AddressesMicroServiceController {
   @MessagePattern({ cmd: 'updateAddress' })
   @RpcCatch()
   async updateShippingAddress(
-    @Payload() userId: string,
+    @Payload() user_id: string,
     @Payload() UpdateUserDto: Partial<ShippingAddress>
   ) {
-    return await this.addressesService.updateShippingAddress(userId, UpdateUserDto)
+    return await this.addressesService.updateShippingAddress(user_id, UpdateUserDto)
   }
 
   // @MessagePattern({ cmd: 'getAddress' })
   // @RpcCatch()
-  // async getShippingAddress(@Payload() userId: string) {
-  //   return await this.addressesService.getShippingAddress(userId)
+  // async getShippingAddress(@Payload() user_id: string) {
+  //   return await this.addressesService.getShippingAddress(user_id)
   // }
 
   @MessagePattern({ cmd: 'getShippingDetailsById' })

@@ -26,11 +26,11 @@ export class CreateProductDto {
     @IsNumber()
     @Min(0)
     @IsNotEmpty()
-    stockQty: number;
+    stock_qty: number;
 
     @IsString()
     @IsNotEmpty()
-    stockType: string;
+    stock_type: string;
 
     @IsString()
     @IsOptional()

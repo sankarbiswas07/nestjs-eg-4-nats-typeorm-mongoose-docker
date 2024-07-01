@@ -29,11 +29,11 @@ export class UpdateProductDto {
     @IsNumber()
     @Min(0)
     @IsOptional()
-    stockQty?: number;
+    stock_qty?: number;
 
     @IsString()
     @IsOptional()
-    stockType?: string;
+    stock_type?: string;
 
     @IsString()
     @IsOptional()
