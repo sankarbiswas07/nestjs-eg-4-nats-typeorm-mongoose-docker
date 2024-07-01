@@ -2,6 +2,9 @@ import { IsNotEmpty, IsString, MaxLength, IsNumber,
   IsInt, IsOptional, IsArray, IsMongoId } from 'class-validator';
 
 export class Product {
+  @IsNotEmpty()
+  @IsString()
+  product_id: string;
 
   @IsNotEmpty()
   @IsString()

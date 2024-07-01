@@ -13,7 +13,6 @@ export class CreateOrderDto {
   @IsString()
   product_id: string;
 
-  @IsNotEmpty()
   @IsEnum(OrderPaymentStatus) // Validate against OrderPaymentStatus enum
-  status: OrderPaymentStatus;
+  status: OrderPaymentStatus = OrderPaymentStatus.COD;
 }

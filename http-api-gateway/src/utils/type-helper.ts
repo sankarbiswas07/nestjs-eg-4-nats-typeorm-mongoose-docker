@@ -5,6 +5,7 @@ export enum StockQtyUnitStatus {
 }
 
 export enum OrderPaymentStatus {
+    COD = 'cash on delivery',
     NUMBER = 'paid',
     FAILED = 'failed',
     CANCELLED = 'cancelled',

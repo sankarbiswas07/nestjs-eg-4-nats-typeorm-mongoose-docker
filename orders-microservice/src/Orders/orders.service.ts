@@ -12,23 +12,22 @@ export class OrdersService {
   constructor(
     @Inject('NATS_SERVICE') private readonly natsClient: ClientProxy,
     @InjectRepository(UserOrders) private readonly ordersRepository: Repository<UserOrders>,
-  ) {}
+  ) { }
 
   async createOrder(createOrderDto: CreateOrderDto): Promise<UserOrders> {
-    // Fetch product data
-    const product = await lastValueFrom(
-      this.natsClient.send({ cmd: 'getProduct' }, { id: createOrderDto.product_id })
-    );
 
-    // Fetch user data
-    const user = await lastValueFrom(
-      this.natsClient.send({ cmd: 'getUser' }, { id: createOrderDto.user_id })
-    );
-
-    // Fetch shipping data
-    const shipping = await lastValueFrom(
-      this.natsClient.send({ cmd: 'getShippingDetails' }, { id: createOrderDto.shipping_id })
-    );
+    const [product, user, shipping] = await Promise.all([
+      await lastValueFrom(
+        this.natsClient.send({ cmd: 'getProduct' }, { id: createOrderDto.product_id })
+      ),
+      await lastValueFrom(
+        this.natsClient.send({ cmd: 'getUser' }, { id: createOrderDto.user_id })
+      ),
+      await lastValueFrom(
+        this.natsClient.send({ cmd: 'getShippingDetailsById' }, { id: createOrderDto.shipping_id })
+      )
+    ])
+    console.log(product)
 
     const newOrder = this.ordersRepository.create({
       ...createOrderDto,
@@ -40,15 +39,19 @@ export class OrdersService {
       stockQty: product.stockQty,
       stockType: product.stockType,
       image_urls: product.image_urls,
-      user_name: user.name,
-      display_name: user.display_name,
+
+      user_name: user.user_name,
+      display_name: user.display_name || user.user_name,
       avatar_url: user.avatar_url,
+
       shipping_name: shipping.name,
       shipping_phone: shipping.phone,
       shipping_line_1: shipping.line_1,
       shipping_landmark: shipping.landmark,
       shipping_state: shipping.state,
     });
+
+    console.log(newOrder)
 
     return this.ordersRepository.save(newOrder);
   }

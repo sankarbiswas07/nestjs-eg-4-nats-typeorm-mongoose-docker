@@ -1,6 +1,6 @@
 import { Controller } from '@nestjs/common';
 
-import { MessagePattern, Payload } from '@nestjs/microservices';
+import { EventPattern, MessagePattern, Payload } from '@nestjs/microservices';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './users.service';
 import { RpcCatch } from 'src/utils/rpc-exception.decorator';
@@ -40,5 +40,12 @@ export class UsersMicroServiceController {
   ) {
     const {page, limit, filter} = queryUsersDto
     return await this.usersService.getUsers(page, limit, filter)
+  }
+
+  @EventPattern('newAddressCreated')
+  newAddressCreated(@Payload() data: any) {
+    console.log(data);
+    console.log('EventPattern: newAddressCreated')
+    return this.usersService.updateUserAddress(data.user_id, data._id)
   }
 }

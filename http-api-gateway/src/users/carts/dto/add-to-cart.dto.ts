@@ -36,4 +36,8 @@ export class AddToCartDto {
   @IsOptional()
   @IsString()
   image_urls?: string;
+
+  @IsNotEmpty()
+  @IsString()
+  user_id: string;
 }

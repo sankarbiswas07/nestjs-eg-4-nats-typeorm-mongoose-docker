@@ -19,9 +19,8 @@ export class UpdateOrderDto {
   description?: string;
 
   @IsOptional()
-  @IsArray()
-  @IsString({ each: true })
-  categories_uuids?: string[];
+  @IsString()
+  categories_uuids?: string;
 
   @IsOptional()
   @IsInt()

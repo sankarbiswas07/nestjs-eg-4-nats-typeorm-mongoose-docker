@@ -4,26 +4,29 @@ import mongoose from 'mongoose';
 @Schema()
 export class ShippingAddress {
 
-    @Prop({ unique: true, required: true })
-    name: string
+  @Prop({ type: mongoose.Schema.Types.ObjectId, required: true })
+  user_id: mongoose.Types.ObjectId;
 
-    @Prop({ required: true })
-    phone: string
+  @Prop({ unique: true, required: true })
+  name: string
 
-    @Prop({ required: true })
-    line_1: string
+  @Prop({ required: true })
+  phone: string
 
-    @Prop({ required: false })
-    landmark?: string
+  @Prop({ required: true })
+  line_1: string
 
-    @Prop({ required: true })
-    state: string
+  @Prop({ required: false })
+  landmark?: string
 
-    @Prop({ required: true })
-    zip: string
+  @Prop({ required: true })
+  state: string
 
-    @Prop({ required: false, default: false })
-    isDefault?: boolean
+  @Prop({ required: true })
+  zip: string
+
+  @Prop({ required: false, default: false })
+  is_default?: boolean
 
 };
 export const ShippingAddressSchema = SchemaFactory.createForClass(ShippingAddress);

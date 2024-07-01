@@ -15,10 +15,10 @@ export class User {
   avatar_url?: string;
 
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'ShippingAddress' }] })
-  shipping_addresses: ShippingAddress[];
+  shipping_addresses: string[];
 
   @Prop({ required: false, default: 'inactive' })
-  isDefault?: string
+  is_active?: string
 
 };
 

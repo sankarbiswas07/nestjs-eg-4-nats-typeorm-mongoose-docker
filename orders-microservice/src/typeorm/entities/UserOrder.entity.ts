@@ -20,7 +20,8 @@ export class UserOrders {
     description?: string;
 
     // Array of categories this product belongs to
-    categories_uuids?: string[];
+    @Column({ nullable: true })
+    categories_uuids?: string;
 
     @Column({ nullable: false })
     mrp: number; // for eg. mrp = max retail price, incl. GST
@@ -28,7 +29,7 @@ export class UserOrders {
     @Column({ nullable: false, default: 0, type: 'int' })
     stockQty: number;
 
-    @Column({ nullable: false, default: 'pieces' })
+    @Column({ nullable: true, default: 'pieces' })
     stockType?: string;
 
     @Column({ nullable: true })
@@ -41,10 +42,10 @@ export class UserOrders {
     @Column({ nullable: false })
     user_name: string;
 
-    @Column({ nullable: false, })
+    @Column({ nullable: true, })
     display_name?: string;
 
-    @Column({ nullable: false, })
+    @Column({ nullable: true, })
     avatar_url?: string;
 
     // Entity: shipping

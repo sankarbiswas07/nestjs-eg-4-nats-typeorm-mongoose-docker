@@ -7,12 +7,14 @@ import { CartsModule } from './users/carts/carts.module';
 import { ProductsModule } from './products/products/products.module';
 import { ProductCategoriesModule } from './products/categories/product-categories.module';
 import { OrdersModule } from './users/orders/orders.module';
+import { AddressesModule } from './users/addresses/addresses.module';
 
 @Module({
   imports: [
     UsersModule,
     CartsModule,
     OrdersModule,
+    AddressesModule,
     RouterModule.register([
       {
         path: 'users',
@@ -25,6 +27,10 @@ import { OrdersModule } from './users/orders/orders.module';
           {
             path: 'orders',
             module: OrdersModule,
+          },
+          {
+            path: 'addresses',
+            module: AddressesModule,
           },
         ],
       },

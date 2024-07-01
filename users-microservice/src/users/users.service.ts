@@ -28,7 +28,9 @@ export class UsersService {
     }
 
     async getUser(userId: string) {
-        return await this.userModel.findById(this.getObjectId(userId)).exec();
+        return await this.userModel
+        .findById(this.getObjectId(userId))
+        .populate('shipping_addresses').exec();
     }
 
     async getUsers(
@@ -52,6 +54,18 @@ export class UsersService {
         }
 
         Object.assign(existingUser, updateUserDto);
+        return await existingUser.save();
+    }
+
+
+    async updateUserAddress(userId: string, s_addresses: string) {
+        const existingUser = await this.userModel.findById(this.getObjectId(userId));
+        if (!existingUser) {
+            throw new RpcException('User not found');
+        }
+
+        existingUser.shipping_addresses.push(s_addresses)
+
         return await existingUser.save();
     }
 }
