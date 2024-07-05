@@ -1,5 +1,5 @@
 import { Controller } from '@nestjs/common';
-import { EventPattern, MessagePattern, Payload } from '@nestjs/microservices';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 import { CartsService } from './carts.service';
 import { AddToCartWithUserDto, RemoveItemFromCartDto } from './dto/cart-item.dto';
 import { RpcCatch } from 'src/utils/rpc-exception.decorator';
@@ -9,7 +9,6 @@ export class CartsMicroServiceController {
   constructor(private readonly cartService: CartsService) { }
 
   @MessagePattern({ cmd: 'addToMyCart' })
-  @EventPattern('addToMyCart')
   @RpcCatch()
   async addToMyCart(@Payload() addToCartWithUserDto: AddToCartWithUserDto) {
     console.log("hi from add to my cart, skipped from cart : "+ addToCartWithUserDto.skippedCart);

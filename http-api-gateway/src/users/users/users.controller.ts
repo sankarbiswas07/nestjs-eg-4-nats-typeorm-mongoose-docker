@@ -42,22 +42,24 @@ export class UsersController {
     return response;
   }
 
-  @Get(':id')
+  @Get(':_id')
   @AsyncWrapper()
-  async findOne(@Param('id') id: string) {
+  async findOne(@Param('_id') _id: string) {
     const response = await lastValueFrom(
       this.natsClient
-        .send({ cmd: 'getUser' }, { id })
+        .send({ cmd: 'getUser' }, { _id })
     );
     return response;
   }
 
-  @Patch(':id')
+  @Patch(':_id')
   @AsyncWrapper()
-  async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+  async update(@Param('_id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    console.log(id)
+
     const response = await lastValueFrom(
       this.natsClient
-        .send({ cmd: 'updateUser' }, { id, ...updateUserDto })
+        .send({ cmd: 'updateUser' }, { user_id: id, updateUserDto })
     );
     return response;
   }

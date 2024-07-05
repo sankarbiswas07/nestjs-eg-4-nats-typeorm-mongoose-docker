@@ -1,20 +1,19 @@
 import {
     IsEmail,
-    IsNotEmpty,
     IsOptional,
     IsString,
     MaxLength
 } from "class-validator";
 
 export class UpdateUserDto {
-    @IsNotEmpty()
+    @IsOptional()
     @IsString()
     @MaxLength(32)
-    user_name: string;
+    user_name?: string;
 
-    @IsNotEmpty()
+    @IsOptional()
     @IsEmail()
-    email: string;
+    email?: string;
 
     @IsOptional()
     @IsString()
@@ -27,5 +26,5 @@ export class UpdateUserDto {
 
     @IsOptional()
     @IsString()
-    status: string = 'inactive'; // default inactive
+    status?: string = 'inactive'; // default inactive
 }

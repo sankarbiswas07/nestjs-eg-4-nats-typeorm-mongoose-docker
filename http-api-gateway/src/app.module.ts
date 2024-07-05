@@ -35,6 +35,11 @@ import { AddressesModule } from './users/addresses/addresses.module';
         ],
       },
     ]),
+    // RouterModule.register([
+    //   {
+    //     path: 'users/carts',
+    //     module: CartsModule,
+    //   }]),
     ProductsModule,
     ProductCategoriesModule,
     RouterModule.register([

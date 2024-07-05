@@ -71,8 +71,19 @@ services:
   nats:
     image: nats
     container_name: nats_container
-    ports:
+    ports: #4222 6222 8222
       - 4222:4222 # external port : internal port
+      - 6222:6222 # external port : internal port
+      - 8222:8222 # external port : internal port
+
+
+  nats-webui:
+      image: suisrc/nats-webui:0.0.2
+      container_name: nats-webui
+      ports:
+        - "8080:80"  # Map port 80 of the container to port 8080 on the host
+      depends_on:
+        - nats
 
   # MySQL DB
   mysql_db:
@@ -104,7 +115,7 @@ services:
     image: phpmyadmin
     restart: always
     ports:
-      - "8090:80"
+      - "8090:8090"
     environment:
       PMA_HOST: mysql_db
       MYSQL_ROOT_PASSWORD: test_pwd

@@ -1,7 +1,9 @@
 // src/users/dto/query-users.dto.ts
-import { IsOptional, IsPositive, IsString } from 'class-validator';
-import { Type } from 'class-transformer';
+import { IsNotEmpty, IsOptional, IsPositive, IsString } from 'class-validator';
+import { Transform, Type } from 'class-transformer';
 import { UpdateUserDto } from './update-user.dto';
+import { ObjectId } from 'typeorm';
+import { SafeMongoIdTransform } from 'src/utils/helper';
 
 export class QueryUsersDto {
   @IsOptional()
@@ -17,4 +19,11 @@ export class QueryUsersDto {
   @IsOptional()
   @IsString()
   filter?: Partial<UpdateUserDto>;
+}
+
+
+export class UserIdDto {
+  @IsNotEmpty()
+  @Transform((value) => SafeMongoIdTransform(value))
+  _id: string
 }

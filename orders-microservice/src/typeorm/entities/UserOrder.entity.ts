@@ -26,8 +26,8 @@ export class UserOrders {
     @Column({ nullable: false })
     mrp: number; // for eg. mrp = max retail price, incl. GST
 
-    @Column({ nullable: false, default: 0, type: 'int' })
-    stock_qty: number;
+    @Column({ nullable: false, default: 1, type: 'int' })
+    order_qty: number;
 
     @Column({ nullable: true, default: 'pieces' })
     stock_type?: string;
@@ -44,9 +44,6 @@ export class UserOrders {
 
     @Column({ nullable: true, })
     display_name?: string;
-
-    @Column({ nullable: true, })
-    avatar_url?: string;
 
     // Entity: shipping
     @Column({ nullable: false, })
@@ -66,4 +63,7 @@ export class UserOrders {
 
     @Column({ nullable: false, })
     shipping_state: string
+
+    @Column({ nullable: false, })
+    shipping_zip: string
 }

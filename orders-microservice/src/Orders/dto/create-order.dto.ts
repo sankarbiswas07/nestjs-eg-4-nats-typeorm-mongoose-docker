@@ -57,31 +57,39 @@ export class CreateOrderViaCartDto extends Product {
 
   @IsString()
   @IsNotEmpty()
+  user_name: string; // user's or buyer name
+
+  @IsString()
+  @IsNotEmpty()
   display_name: string; // user's or buyer display name
 
   @IsString()
   @IsNotEmpty()
-  name: string; // c/o address name
+  shipping_id: string // c/o shipping address unique id
 
   @IsString()
   @IsNotEmpty()
-  phone: string;
+  shipping_name: string; // c/o by - name
 
   @IsString()
   @IsNotEmpty()
-  line_1: string;
+  shipping_phone: string;
+
+  @IsString()
+  @IsNotEmpty()
+  shipping_line_1: string;
 
   @IsString()
   @IsOptional()
-  landmark?: string;
+  shipping_landmark?: string;
 
   @IsString()
   @IsNotEmpty()
-  state: string;
+  shipping_state: string;
 
   @IsString()
   @IsNotEmpty()
-  zip: string;
+  shipping_zip: string;
 
   @IsBoolean()
   @IsOptional()

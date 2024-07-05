@@ -5,8 +5,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './users.service';
 import { RpcCatch } from 'src/utils/rpc-exception.decorator';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { User } from 'src/schemas/User.schema';
-import { QueryUsersDto } from './dto/query-users.dto';
+import { QueryUsersDto, UserIdDto } from './dto/query-users.dto';
 
 @Controller()
 export class UsersMicroServiceController {
@@ -21,15 +20,17 @@ export class UsersMicroServiceController {
   @MessagePattern({ cmd: 'updateUser' })
   @RpcCatch()
   async updateUser(
-    @Payload() user_id: string,
-    @Payload() UpdateUserDto: Partial<User>
+    @Payload() data: { user_id: UserIdDto, updateUserDto: UpdateUserDto }
   ) {
-    return await this.usersService.updateUser(user_id, UpdateUserDto)
+    const { user_id, updateUserDto } = data
+    console.log(user_id)
+    console.log(updateUserDto)
+    return await this.usersService.updateUser(user_id, updateUserDto)
   }
 
   @MessagePattern({ cmd: 'getUser' })
   @RpcCatch()
-  async getUser(@Payload() user_id: string) {
+  async getUser(@Payload() user_id: UserIdDto) {
     return await this.usersService.getUser(user_id)
   }
 
@@ -38,7 +39,7 @@ export class UsersMicroServiceController {
   async getUsers(
     @Payload() queryUsersDto: QueryUsersDto,
   ) {
-    const {page, limit, filter} = queryUsersDto
+    const { page, limit, filter } = queryUsersDto
     return await this.usersService.getUsers(page, limit, filter)
   }
 

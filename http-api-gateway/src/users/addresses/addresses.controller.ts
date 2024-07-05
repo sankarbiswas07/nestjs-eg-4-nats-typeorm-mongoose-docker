@@ -16,7 +16,7 @@ import { CreateAddressDto } from './dto/create-address.dto';
 import { UpdateAddressDto } from './dto/update-address.dto';
 
 
-@Controller('')
+@Controller()
 export class AddressesController {
   constructor(@Inject('NATS_SERVICE') private natsClient: ClientProxy) { }
 

@@ -1,12 +1,17 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
-import { ShippingAddress } from './ShippingAddress.schema';
 
-@Schema()
+
+@Schema({ timestamps: true })
 export class User {
+
+  _id: mongoose.Schema.Types.ObjectId
 
   @Prop({ unique: true, required: true })
   user_name: string;
+
+  @Prop({ unique: true, required: true })
+  email: string;
 
   @Prop({ required: false })
   display_name?: string;

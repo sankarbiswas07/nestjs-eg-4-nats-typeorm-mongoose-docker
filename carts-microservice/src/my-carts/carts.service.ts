@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Cache } from 'cache-manager';
-import { AddToCartWithUserDto, IsSkippedCartDto, Product, ProductSkuInObj } from './dto/cart-item.dto';
+import { AddToCartWithUserDto, Product, ProductSkuInObj } from './dto/cart-item.dto';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 
 @Injectable()
@@ -19,7 +19,7 @@ export class CartsService {
 
   async addToCart(
     user_id: string,
-    addToCartWithUserDto: AddToCartWithUserDto & IsSkippedCartDto
+    addToCartWithUserDto: AddToCartWithUserDto
   ): Promise<void> {
     const cart = await this.getCart(user_id);
     cart.push(addToCartWithUserDto);

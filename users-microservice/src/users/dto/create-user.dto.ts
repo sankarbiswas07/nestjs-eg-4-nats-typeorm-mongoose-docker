@@ -27,5 +27,5 @@ export class CreateUserDto {
 
     @IsOptional()
     @IsString()
-    status: string = 'inactive'; // default inactive
+    is_active: string = 'inactive'; // default inactive
 }

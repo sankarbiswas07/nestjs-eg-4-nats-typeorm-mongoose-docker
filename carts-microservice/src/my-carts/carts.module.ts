@@ -3,9 +3,7 @@ import { NatsClientModule } from 'src/nats-client/nats-client.module';
 import { CartsMicroServiceController } from './carts.controller';
 import { CartsService } from './carts.service';
 @Module({
-  imports:[
-    NatsClientModule
-  ],
+  imports:[NatsClientModule],
   controllers: [CartsMicroServiceController],
   providers: [CartsService],
 })
