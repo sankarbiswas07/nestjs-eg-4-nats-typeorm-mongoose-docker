@@ -45,8 +45,8 @@ export class UsersMicroServiceController {
 
   @EventPattern('newAddressCreated')
   newAddressCreated(@Payload() data: any) {
-    console.log(data);
     console.log('EventPattern: newAddressCreated')
+    console.log(data);
     return this.usersService.updateUserAddress(data.user_id, data._id)
   }
 }

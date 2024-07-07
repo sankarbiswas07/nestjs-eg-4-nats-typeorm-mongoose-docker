@@ -47,7 +47,7 @@ export class AddressesController {
   async findOne(@Param('id') id: string) {
     const response = await lastValueFrom(
       this.natsClient
-        .send({ cmd: 'getAddress' }, { id })
+        .send({ cmd: 'getShippingDetailsById' }, { id })
     );
     return response;
   }

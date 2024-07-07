@@ -19,11 +19,11 @@ export class ProductCategoriesController {
     );
   }
 
-  @Get(':id')
+  @Get(':_categoryId')
   @AsyncWrapper()
-  async findOne(@Param('id') id: string) {
+  async findOne(@Param('_categoryId') _id: string) {
     return await lastValueFrom(
-      this.natsClient.send({ cmd: 'getProductCategory' }, { id })
+      this.natsClient.send({ cmd: 'getProductCategory' }, { _id })
     );
   }
 
@@ -35,11 +35,11 @@ export class ProductCategoriesController {
     );
   }
 
-  @Patch(':id')
+  @Patch(':productCategoryId')
   @AsyncWrapper()
-  async update(@Param('id') id: string, @Body() updateCategoryDto: UpdateProductCategoryDto) {
+  async update(@Param('productCategoryId') productCategoryId: string, @Body() updateCategoryDto: UpdateProductCategoryDto) {
     return await lastValueFrom(
-      this.natsClient.send({ cmd: 'updateCategory' }, { id, updateCategoryDto })
+      this.natsClient.send({ cmd: 'updateProductCategory' }, { productCategoryId, updateCategoryDto })
     );
   }
 }

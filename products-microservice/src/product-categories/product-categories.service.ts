@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { ProductCategory, ProductCategoryDocument } from '../schemas/ProductCategory.schema'
 import { CreateProductCategoryDto } from './dto/create-product-category.dto';
 import { UpdateProductCategoryDto } from './dto/update-product-category.dto';
-import { QueryProductCategoriesDto } from './dto/query-product-categories.dto';
+import { CategoryIdDto, QueryProductCategoriesDto } from './dto/query-product-categories.dto';
 import { RpcException } from '@nestjs/microservices';
 
 @Injectable()
@@ -18,8 +18,8 @@ export class ProductCategoryService {
     return newProductCategory.save();
   }
 
-  async getProductCategoryById(productCategoryId: string): Promise<ProductCategoryDocument> {
-    const productCategory = await this.productCategoryModel.findById(productCategoryId).exec();
+  async getProductCategoryById(_id: CategoryIdDto): Promise<ProductCategoryDocument> {
+    const productCategory = await this.productCategoryModel.findById(_id).exec();
     if (!productCategory) {
       throw new RpcException('Product category not found');
     }
@@ -32,13 +32,18 @@ export class ProductCategoryService {
     return this.productCategoryModel.find().skip(skip).limit(limit).exec();
   }
 
-  async updateProductCategory(productCategoryId: string, updateProductCategoryDto: UpdateProductCategoryDto): Promise<ProductCategoryDocument> {
-    const existingProductCategory = await this.getProductCategoryById(productCategoryId);
+  async updateProductCategory(_id: CategoryIdDto, updateProductCategoryDto: UpdateProductCategoryDto): Promise<ProductCategoryDocument> {
+
+    const existingProductCategory = await this.getProductCategoryById(_id);
     if (!existingProductCategory) {
       throw new RpcException('Product category not found');
     }
 
+    console.log(existingProductCategory)
+    console.log(updateProductCategoryDto)
+    
     Object.assign(existingProductCategory, updateProductCategoryDto);
+    console.log(_id)
     return existingProductCategory.save();
   }
 }

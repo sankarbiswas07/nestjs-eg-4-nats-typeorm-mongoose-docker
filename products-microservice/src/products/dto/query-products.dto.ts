@@ -1,6 +1,7 @@
-import { IsOptional, IsPositive, IsString } from 'class-validator';
-import { Type } from 'class-transformer';
+import { IsNotEmpty, IsOptional, IsPositive, IsString } from 'class-validator';
+import { Transform, Type } from 'class-transformer';
 import { UpdateProductDto } from './update-product.dto';
+import { SafeMongoIdTransform } from 'src/utils/helper';
 
 export class QueryProductsDto {
   @IsOptional()
@@ -16,4 +17,11 @@ export class QueryProductsDto {
   @IsOptional()
   @IsString()
   filter?: Partial<UpdateProductDto>;
+}
+
+
+export class ProductIdDto {
+  @IsNotEmpty()
+  @Transform((value) => SafeMongoIdTransform(value))
+  _id: string
 }

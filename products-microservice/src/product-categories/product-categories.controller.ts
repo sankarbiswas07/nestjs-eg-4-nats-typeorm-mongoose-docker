@@ -4,7 +4,7 @@ import { RpcCatch } from 'src/utils/rpc-exception.decorator';
 import { ProductCategoryService } from './product-categories.service';
 import { CreateProductCategoryDto } from './dto/create-product-category.dto';
 import { UpdateProductCategoryDto } from './dto/update-product-category.dto';
-import { QueryProductCategoriesDto } from './dto/query-product-categories.dto';
+import { CategoryIdDto, QueryProductCategoriesDto } from './dto/query-product-categories.dto';
 
 @Controller()
 export class ProductCategoriesMicroServiceController {
@@ -20,8 +20,8 @@ export class ProductCategoriesMicroServiceController {
 
   @MessagePattern({ cmd: 'getProductCategory' })
   @RpcCatch()
-  async getProductCategory(@Payload() productCategoryId: string) {
-    return this.productCategoryService.getProductCategoryById(productCategoryId);
+  async getProductCategory(@Payload() _id: CategoryIdDto) {
+    return this.productCategoryService.getProductCategoryById(_id);
   }
 
 
@@ -35,9 +35,9 @@ export class ProductCategoriesMicroServiceController {
   @MessagePattern({ cmd: 'updateProductCategory' })
   @RpcCatch()
   async updateProductCategory(
-    @Payload() productCategoryId: string,
-    @Payload() updateProductCategoryDto: UpdateProductCategoryDto,
+    @Payload() data: { productCategoryId: CategoryIdDto, updateCategoryDto: UpdateProductCategoryDto }
   ) {
-    return this.productCategoryService.updateProductCategory(productCategoryId, updateProductCategoryDto);
+    const { productCategoryId, updateCategoryDto } = data
+    return this.productCategoryService.updateProductCategory(productCategoryId, updateCategoryDto);
   }
 }
