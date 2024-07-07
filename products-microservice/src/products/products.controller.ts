@@ -4,7 +4,7 @@ import { RpcCatch } from '../utils/rpc-exception.decorator';
 import { CreateProductDto } from './dto/create-product.dto';
 import { ProductService } from './products.service';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { QueryProductsDto } from './dto/query-products.dto';
+import { ProductIdDto, QueryProductsDto } from './dto/query-products.dto';
 
 @Controller()
 export class ProductsMicroServiceController {
@@ -19,16 +19,18 @@ export class ProductsMicroServiceController {
   @MessagePattern({ cmd: 'updateProduct' })
   @RpcCatch()
   async updateProduct(
-    @Payload() productId: string,
-    @Payload() updateProductDto: UpdateProductDto
+    @Payload() data: { _id: ProductIdDto, updateProductDto: UpdateProductDto}
   ) {
-    return this.productService.updateProduct(productId, updateProductDto);
+    const {_id, updateProductDto} = data
+    console.log(_id)
+    console.log(updateProductDto)
+    return this.productService.updateProduct(_id, updateProductDto);
   }
 
   @MessagePattern({ cmd: 'getProduct' })
   @RpcCatch()
-  async getProduct(@Payload() productId: string) {
-    return this.productService.getProduct(productId);
+  async getProduct(@Payload() _id: ProductIdDto) {
+    return this.productService.getProduct(_id);
   }
 
   @MessagePattern({ cmd: 'getProducts' })

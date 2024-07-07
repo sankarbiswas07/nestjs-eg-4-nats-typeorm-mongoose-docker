@@ -10,7 +10,6 @@ import { AsyncWrapper } from 'src/utils/async-wrapper.decorator';
 export class ProductsController {
   constructor(@Inject('NATS_SERVICE') private natsClient: ClientProxy) { }
 
-
   @Post('create')
   @AsyncWrapper()
   async create(@Body() createProductDto: CreateProductDto) {
@@ -21,9 +20,9 @@ export class ProductsController {
 
   @Get(':id')
   @AsyncWrapper()
-  async findOne(@Param('id') id: string) {
+  async findOne(@Param('id') _id: string) {
     return await lastValueFrom(
-      this.natsClient.send({ cmd: 'getProduct' }, { id })
+      this.natsClient.send({ cmd: 'getProduct' }, { _id })
     );
   }
 
@@ -35,11 +34,11 @@ export class ProductsController {
     );
   }
 
-  @Patch(':id')
+  @Patch(':_id')
   @AsyncWrapper()
-  async update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
+  async update(@Param('_id') _id: string, @Body() updateProductDto: UpdateProductDto) {
     return await lastValueFrom(
-      this.natsClient.send({ cmd: 'updateProduct' }, { id, updateProductDto })
+      this.natsClient.send({ cmd: 'updateProduct' }, { _id, updateProductDto })
     );
   }
 }
