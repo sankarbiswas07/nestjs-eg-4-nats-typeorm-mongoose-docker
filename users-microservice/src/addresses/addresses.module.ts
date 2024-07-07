@@ -17,7 +17,8 @@ import {ShippingAddress, ShippingAddressSchema} from '../schemas/ShippingAddress
         name: ShippingAddress.name,
         schema: ShippingAddressSchema,
       },
-    ]),    NatsClientModule
+    ]),
+    NatsClientModule
   ],
   controllers: [AddressesMicroServiceController],
   providers: [AddressesService],
