@@ -1,5 +1,4 @@
 import { IsArray, IsBoolean, IsEnum, IsInt, IsMongoId, IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString, MaxLength } from 'class-validator';
-import { OrderPaymentStatus } from '../../../utils/type-helper';
 
 export class Product {
   @IsNotEmpty()
@@ -52,33 +51,29 @@ export class CreateOrderViaCartDto extends Product {
 
   @IsString()
   @IsNotEmpty()
-  display_name: string; // user's or buyer display name
+  shipping_name: string; // c/o address name
 
   @IsString()
   @IsNotEmpty()
-  name: string; // c/o address name
+  shipping_phone: string;
 
   @IsString()
   @IsNotEmpty()
-  phone: string;
-
-  @IsString()
-  @IsNotEmpty()
-  line_1: string;
+  shipping_line_1: string;
 
   @IsString()
   @IsOptional()
-  landmark?: string;
+  shipping_landmark?: string;
+
+  @IsString()
+  @IsNotEmpty()
+  shipping_state: string;
+
+  @IsString()
+  @IsNotEmpty()
+  shipping_zip: string;
 
   @IsBoolean()
   @IsOptional()
   skippedCart?: boolean = false;
-
-  @IsString()
-  @IsNotEmpty()
-  state: string;
-
-  @IsString()
-  @IsNotEmpty()
-  zip: string;
 }

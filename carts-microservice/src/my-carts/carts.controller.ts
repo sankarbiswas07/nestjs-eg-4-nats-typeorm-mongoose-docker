@@ -10,28 +10,29 @@ export class CartsMicroServiceController {
 
   @MessagePattern({ cmd: 'addToMyCart' })
   @RpcCatch()
-  async addToMyCart(@Payload() addToCartWithUserDto: AddToCartWithUserDto) {
-    console.log("hi from add to my cart, skipped from cart : "+ addToCartWithUserDto.skippedCart);
-
+  async addToMyCart(
+    @Payload() addToCartWithUserDto: AddToCartWithUserDto
+  ) {
     const { user_id, ...product } = addToCartWithUserDto
-
     await this.cartService.addToCart(user_id, { ...product, user_id });
-    return 'Item added to cart';
+    return true
   }
 
   @MessagePattern({ cmd: 'removeFromMyCart' })
   @RpcCatch()
-  async removeFromMyCart(@Payload() removeItemFromCartDto: RemoveItemFromCartDto) {
-
+  async removeFromMyCart(
+    @Payload() removeItemFromCartDto: RemoveItemFromCartDto
+  ) {
     const { user_id, product_sku } = removeItemFromCartDto
-
     await this.cartService.removeFromCart(user_id, { product_sku });
-    return 'Item removed from cart';
+    return true
   }
 
   @MessagePattern({ cmd: 'getMyCart' })
   @RpcCatch()
-  async getMyCart(@Payload() user_id: string) {
+  async getMyCart(
+    @Payload() user_id: string
+  ) {
     return await this.cartService.getCart(user_id);
   }
 }

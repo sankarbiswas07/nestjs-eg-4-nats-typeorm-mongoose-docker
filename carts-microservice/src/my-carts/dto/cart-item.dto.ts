@@ -55,26 +55,14 @@ export class AddToCartWithUserDto extends Product {
   @IsNotEmpty()
   @IsString()
   user_id: string;
+  
+  @IsString()
+  @IsNotEmpty()
+  user_name: string; // user's or buyer name
 
   @IsString()
   @IsNotEmpty()
   display_name: string; // user's or buyer display name
-
-  @IsString()
-  @IsNotEmpty()
-  name: string; // c/o address name
-
-  @IsString()
-  @IsNotEmpty()
-  phone: string;
-
-  @IsString()
-  @IsNotEmpty()
-  line_1: string;
-
-  @IsString()
-  @IsOptional()
-  landmark?: string;
 
   @IsBoolean()
   @IsOptional()
@@ -82,11 +70,31 @@ export class AddToCartWithUserDto extends Product {
 
   @IsString()
   @IsNotEmpty()
-  state: string;
+  shipping_id: string // c/o shipping address unique id
 
   @IsString()
   @IsNotEmpty()
-  zip: string;
+  shipping_name: string; // c/o by - name
+
+  @IsString()
+  @IsNotEmpty()
+  shipping_phone: string;
+
+  @IsString()
+  @IsNotEmpty()
+  shipping_line_1: string;
+
+  @IsString()
+  @IsOptional()
+  shipping_landmark?: string;
+
+  @IsString()
+  @IsNotEmpty()
+  shipping_state: string;
+
+  @IsString()
+  @IsNotEmpty()
+  shipping_zip: string;
 }
 
 export class ProductSkuInObj {

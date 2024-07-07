@@ -22,11 +22,14 @@ export class OrdersController {
     );
   }
 
-  @Get(':id')
+  @Get(':order_id')
   @AsyncWrapper()
-  async findOne(@Param('id') id: GetOrderDto) {
+  async findOne(
+    @Param('order_id') param: GetOrderDto
+  ) {
+    const {order_id} = param
     return await lastValueFrom(
-      this.natsClient.send({ cmd: 'getMyOrder' }, { id })
+      this.natsClient.send({ cmd: 'getMyOrder' }, { id: order_id })
     );
   }
 
@@ -34,7 +37,7 @@ export class OrdersController {
   @AsyncWrapper()
   async findAll(@Query() queryOrdersDto: GetOrdersDto) {
     return await lastValueFrom(
-      this.natsClient.send({ cmd: 'getMyOrders' }, {...queryOrdersDto})
+      this.natsClient.send({ cmd: 'getMyOrders' }, { ...queryOrdersDto })
     );
   }
 

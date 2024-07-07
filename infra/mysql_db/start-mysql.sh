@@ -14,7 +14,7 @@ sleep 30
 
 mysql -u test_user -ptest_pwd <<EOF
 CREATE DATABASE IF NOT EXISTS orders_management;
-GRANT ALL PRIVILEGES ON orders_management.* TO `test_user@17.0.0.1 IDENTIFIED BY 'test_pwd';
+GRANT ALL PRIVILEGES ON orders_management.* TO 'test_user'@'%' IDENTIFIED BY 'test_pwd';
 FLUSH PRIVILEGES;
 EOF
 

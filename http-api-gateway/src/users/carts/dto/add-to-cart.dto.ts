@@ -1,6 +1,8 @@
-import { IsNotEmpty, IsString, MaxLength, IsNumber, IsInt,
-     IsOptional, IsArray, IsMongoId, 
-     IsBoolean} from 'class-validator';
+import {
+  IsNotEmpty, IsString, MaxLength, IsNumber, IsInt,
+  IsOptional, IsArray, IsMongoId,
+  IsBoolean
+} from 'class-validator';
 
 export class AddToCartDto {
   @IsNotEmpty()
@@ -27,7 +29,7 @@ export class AddToCartDto {
 
   @IsNotEmpty()
   @IsInt()
-  stock_qty: number;
+  order_qty: number;
 
   @IsOptional()
   @IsString()
@@ -55,30 +57,30 @@ export class CreateOrderViaCartDto extends AddToCartDto {
 
   @IsString()
   @IsNotEmpty()
-  name: string; // c/o address name
+  shipping_name: string; // c/o address name
 
   @IsString()
   @IsNotEmpty()
-  phone: string;
+  shipping_phone: string;
 
   @IsString()
   @IsNotEmpty()
-  line_1: string;
+  shipping_line_1: string;
 
   @IsString()
   @IsOptional()
-  landmark?: string;
+  shipping_landmark?: string;
+
+  @IsString()
+  @IsNotEmpty()
+  shipping_state: string;
+
+  @IsString()
+  @IsNotEmpty()
+  shipping_zip: string;
 
   @IsBoolean()
   @IsOptional()
   skippedCart?: boolean = false;
-
-  @IsString()
-  @IsNotEmpty()
-  state: string;
-
-  @IsString()
-  @IsNotEmpty()
-  zip: string;
 }
 

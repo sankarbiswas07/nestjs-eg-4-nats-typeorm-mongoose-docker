@@ -1,9 +1,8 @@
 import { Controller, Inject, Post, Body, Get, Param, Patch } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
-import { AddToCartDto } from './dto/add-to-cart.dto';
+import { CreateOrderViaCartDto } from './dto/add-to-cart.dto';
 import { RemoveFromCartDto } from './dto/remove-from-cart.dto';
-import { UserCartDto } from './dto/user-cart.dto';
 import { AsyncWrapper } from 'src/utils/async-wrapper.decorator';
 
 @Controller()
@@ -12,10 +11,11 @@ export class CartsController {
 
   @Post('add')
   @AsyncWrapper()
-  async addToMyCart(@Body() data: { user_id: string; item: AddToCartDto }) {
+  async addToMyCart(@Body() data:  CreateOrderViaCartDto) {
     const response = await lastValueFrom(
       this.natsClient.send({ cmd: 'addToMyCart' }, data)
     );
+    console.log(response)
     return response;
   }
 

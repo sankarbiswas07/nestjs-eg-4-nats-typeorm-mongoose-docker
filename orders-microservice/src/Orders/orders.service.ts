@@ -12,7 +12,7 @@ export class OrdersService {
   ) { }
 
   async createOrder(createOrderDto: CreateOrderViaCartDto): Promise<Omit<UserOrders, 'id'>> {
-    const newOrder = this.ordersRepository.create({...createOrderDto});
+    const newOrder = this.ordersRepository.create({ ...createOrderDto });
     return this.ordersRepository.save(newOrder);
   }
 
@@ -27,14 +27,11 @@ export class OrdersService {
   }
 
   async getOrders(user_id?: string, page: number = 0, limit: number = 10): Promise<UserOrders[]> {
-    const query = this.ordersRepository.createQueryBuilder('order');
-
+    const query = this.ordersRepository.createQueryBuilder('orders');
     if (user_id) {
-      query.andWhere('order.user_id = :user_id', { user_id });
+      query.andWhere('orders.user_id = :user_id', { user_id });
     }
-
     query.skip(page * limit).take(limit);
-
     return query.getMany();
   }
 

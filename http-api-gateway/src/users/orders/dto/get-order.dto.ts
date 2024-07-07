@@ -1,6 +1,7 @@
-import { IsUUID } from 'class-validator';
+import { IsNotEmpty, IsUUID } from 'class-validator';
 
 export class GetOrderDto {
-  @IsUUID()
-  id: string;
+  @IsNotEmpty()
+  @IsUUID('4')
+  order_id: string;
 }

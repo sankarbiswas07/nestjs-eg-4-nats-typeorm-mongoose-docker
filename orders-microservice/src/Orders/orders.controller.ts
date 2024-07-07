@@ -1,5 +1,5 @@
 import { Controller, Inject } from '@nestjs/common';
-import {  ClientProxy, MessagePattern, Payload } from '@nestjs/microservices';
+import { ClientProxy, MessagePattern, Payload } from '@nestjs/microservices';
 
 import { CreateOrderViaCartDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
@@ -13,20 +13,19 @@ export class OrdersMicroserviceController {
   constructor(
     private readonly ordersService: OrdersService,
     @Inject('NATS_SERVICE') private natsClient: ClientProxy
-  ) {}
+  ) { }
 
   @MessagePattern({ cmd: 'createMyOrder' })
   @RpcCatch()
-  async createOrder(@Payload() createOrderDto: CreateOrderViaCartDto) {
-
-    const {skippedCart, ...orderDoc} = createOrderDto
-
-    if(skippedCart){
+  async createOrder(
+    @Payload() createOrderDto: CreateOrderViaCartDto
+  ) {
+    const { skippedCart, ...orderDoc } = createOrderDto
+    if (skippedCart) {
       this.natsClient.send({ cmd: 'addToMyCart' }, createOrderDto)
     }
-
     const newOrder = await this.ordersService.createOrder(orderDoc);
-    if(newOrder){
+    if (newOrder) {
       this.natsClient.emit('newOrderCreated', newOrder)
     }
     return newOrder
@@ -35,21 +34,26 @@ export class OrdersMicroserviceController {
   @MessagePattern({ cmd: 'updateMyOrder' })
   @RpcCatch()
   async updateOrder(
-    @Payload() id: string, 
+    @Payload() id: string,
     @Payload() updateOrderDto: UpdateOrderDto) {
-      return this.ordersService.updateOrder(id, updateOrderDto);
+    return this.ordersService.updateOrder(id, updateOrderDto);
   }
 
   @MessagePattern({ cmd: 'getMyOrders' })
   @RpcCatch()
-  async getOrders(@Payload() getOrdersDto: GetOrdersDto) {
+  async getOrders(
+    @Payload() getOrdersDto: GetOrdersDto
+  ) {
     const { user_id, page, limit } = getOrdersDto;
+    console.log(user_id)
     return this.ordersService.getOrders(user_id, page, limit);
   }
 
   @MessagePattern({ cmd: 'getMyOrder' })
   @RpcCatch()
-  async getOrder(@Payload() getOrderDto: GetOrderDto) {
+  async getOrder(
+    @Payload() getOrderDto: GetOrderDto
+  ) {
     return this.ordersService.getOrder(getOrderDto.id);
   }
 }
