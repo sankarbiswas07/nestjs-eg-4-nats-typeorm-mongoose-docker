@@ -26,13 +26,22 @@ export class OrdersService {
     return this.ordersRepository.save(updatedOrder);
   }
 
-  async getOrders(user_id?: string, page: number = 0, limit: number = 10): Promise<UserOrders[]> {
+  async getOrders(user_id?: string, page: number = 1, limit: number = 10): Promise<UserOrders[]> {
+    console.log(`User ID: ${user_id}`);
+    console.log(`Page: ${page}, Limit: ${limit}`);
+    
     const query = this.ordersRepository.createQueryBuilder('orders');
+    
     if (user_id) {
       query.andWhere('orders.user_id = :user_id', { user_id });
     }
-    query.skip(page * limit).take(limit);
-    return query.getMany();
+    
+    query.skip((page - 1) * limit).take(limit);
+    
+    const result = await query.getMany();
+    console.log(result); // Log the result to see if data is fetched correctly
+    
+    return result;
   }
 
   async getOrder(id: string): Promise<UserOrders> {
