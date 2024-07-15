@@ -1,0 +1,776 @@
+{
+	"info": {
+		"_postman_id": "349dee85-c1c1-476f-a1d4-51f29e4676e6",
+		"name": "Nestjs: microservice gateway example",
+		"description": "Docker services rtun command\n\n`docker-compose up -d nats api_gateway users_microservice products_microservice mongo_db`",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13770549"
+	},
+	"item": [
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "users",
+					"item": [
+						{
+							"name": "users/getUser",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base}}/users/profile/:_id",
+									"host": [
+										"{{base}}"
+									],
+									"path": [
+										"users",
+										"profile",
+										":_id"
+									],
+									"variable": [
+										{
+											"key": "_id",
+											"value": "669560826b3eba0a72950d9d"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "users/getUsers",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base}}/users/profile?page=1&limit=10",
+									"host": [
+										"{{base}}"
+									],
+									"path": [
+										"users",
+										"profile"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "users/creare",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"user_name\": \"mecho shyam\",\r\n    \"email\": \"mecho.shyam@gmail.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base}}/users/profile/create",
+									"host": [
+										"{{base}}"
+									],
+									"path": [
+										"users",
+										"profile",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "users/update",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"user_name\": \"Maachoo\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base}}/users/profile/:_id",
+									"host": [
+										"{{base}}"
+									],
+									"path": [
+										"users",
+										"profile",
+										":_id"
+									],
+									"variable": [
+										{
+											"key": "_id",
+											"value": "669560826b3eba0a72950d9d"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Addresses",
+					"item": [
+						{
+							"name": "get_address(depricated)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base}}/users/addresses/:id",
+									"host": [
+										"{{base}}"
+									],
+									"path": [
+										"users",
+										"addresses",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "669560f76b3eba0a72950da9",
+											"description": "shipping address id"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get_addresses",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base}}/users/addresses?page=1&limit=10",
+									"host": [
+										"{{base}}"
+									],
+									"path": [
+										"users",
+										"addresses"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create_addresses",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"user_id\": \"669560826b3eba0a72950d9d\",\r\n    \"name\": \"Mecho Ghosh Biswas\",\r\n    \"phone\": \"+91 8961766682\",\r\n    \"line_1\": \"Chingrighata\",\r\n    \"landmark\": \"Near Jyoti tower\",\r\n    \"state\": \"West Bengal\",\r\n    \"zip\": \"700019\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base}}/users/addresses/create",
+									"host": [
+										"{{base}}"
+									],
+									"path": [
+										"users",
+										"addresses",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update_addresses",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"user_name\": \"Jhon 2 new\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base}}/users/addresses/:id",
+									"host": [
+										"{{base}}"
+									],
+									"path": [
+										"users",
+										"addresses",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "carts",
+					"item": [
+						{
+							"name": "getMyCart",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base}}/users/carts/:user_id",
+									"host": [
+										"{{base}}"
+									],
+									"path": [
+										"users",
+										"carts",
+										":user_id"
+									],
+									"variable": [
+										{
+											"key": "user_id",
+											"value": "669560826b3eba0a72950d9d"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "addToMyCart",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"product_id\": \"669561b8a94cb5cc480cd22a\",\r\n    \"product_sku\": \"10741674\",\r\n    \"product_name\": \"Adjustable Dumbbells Set\",\r\n    \"description\": \"Versatile dumbbells set with adjustable weight plates for strength training.\",\r\n    \"_categories\": [\r\n        \"667c6dbb591325255fe4ca95\"\r\n    ],\r\n    \"mrp\": 199.99,\r\n    \"order_qty\": 1,\r\n    \"stock_type\": \"piece\",\r\n    \"image_urls\": \"https://example.com/images/fitness_gear/adjustable_dumbbells_set.jpg\",\r\n    \"user_id\": \"669560826b3eba0a72950d9d\",\r\n    \"user_name\": \"Mecho Ghosh Biswas\",\r\n    \"display_name\": \"Mecho Ghosh Biswas\",\r\n    \"shipping_id\": \"668a8c0855bffb4726bb998a\",\r\n    \"shipping_name\": \"Ananya\",\r\n    \"shipping_phone\": \"+91 8961766682\",\r\n    \"shipping_line_1\": \"Chingrighata\",\r\n    \"shipping_landmark\": \"Near Jyoti tower\",\r\n    \"shipping_state\": \"West Bengal\",\r\n    \"shipping_zip\": \"700019\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base}}/users/carts/add",
+									"host": [
+										"{{base}}"
+									],
+									"path": [
+										"users",
+										"carts",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "users/update",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base}}/users/carts/:id",
+									"host": [
+										"{{base}}"
+									],
+									"path": [
+										"users",
+										"carts",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "6687b8bf9c69d4780fee05d0"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "orders",
+					"item": [
+						{
+							"name": "users/getUser",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base}}/users/orders/:order_id",
+									"host": [
+										"{{base}}"
+									],
+									"path": [
+										"users",
+										"orders",
+										":order_id"
+									],
+									"variable": [
+										{
+											"key": "order_id",
+											"value": "6874afe3-a3f7-4bdd-8125-23c506870ee4"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getOrders",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base}}/users/orders?page=1&limit=10&user_id=669560826b3eba0a72950d9d",
+									"host": [
+										"{{base}}"
+									],
+									"path": [
+										"users",
+										"orders"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "10"
+										},
+										{
+											"key": "user_id",
+											"value": "669560826b3eba0a72950d9d"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"product_id\": \"667da6d5fa91a57747f1d93c\",\r\n    \"product_sku\": \"10741674\",\r\n    \"product_name\": \"Adjustable Dumbbells Set\",\r\n    \"description\": \"Versatile dumbbells set with adjustable weight plates for strength training.\",\r\n    \"_categories\": [\r\n        \"667c6dbb591325255fe4ca95\"\r\n    ],\r\n    \"mrp\": 199.99,\r\n    \"order_qty\": 1,\r\n    \"stock_type\": \"piece\",\r\n    \"image_urls\": \"https://example.com/images/fitness_gear/adjustable_dumbbells_set.jpg\",\r\n    \"user_id\": \"669560826b3eba0a72950d9d\",\r\n    \"user_name\": \"Mecho Ghosh Biswas\",\r\n    \"display_name\": \"Mecho Ghosh Biswas\",\r\n    \"shipping_id\": \"669560f76b3eba0a72950da9\",\r\n    \"shipping_name\": \"Ananya\",\r\n    \"shipping_phone\": \"+91 8961766682\",\r\n    \"shipping_line_1\": \"Chingrighata\",\r\n    \"shipping_landmark\": \"Near Jyoti tower\",\r\n    \"shipping_state\": \"West Bengal\",\r\n    \"shipping_zip\": \"700019\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base}}/users/orders/create",
+									"host": [
+										"{{base}}"
+									],
+									"path": [
+										"users",
+										"orders",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "users/update",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"user_name\": \"Jhon 2 new\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base}}/users/:id",
+									"host": [
+										"{{base}}"
+									],
+									"path": [
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "667052058ad7bde8638c1c4a",
+											"description": "MongoId: user.id"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "products",
+			"item": [
+				{
+					"name": "products",
+					"item": [
+						{
+							"name": "getProductById",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base}}/products/products/:id",
+									"host": [
+										"{{base}}"
+									],
+									"path": [
+										"products",
+										"products",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "669561ada94cb5cc480cd228"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getAllProducts",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base}}/products/products?page=1&limit=10",
+									"host": [
+										"{{base}}"
+									],
+									"path": [
+										"products",
+										"products"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "creare",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"product_name\": \"Adjustable Dumbbells Set -II\",\r\n    \"description\": \"Versatile dumbbells set with adjustable weight plates for strength training.\",\r\n    \"_categories\": [\r\n        \"6695614ca94cb5cc480cd221\"\r\n    ],\r\n    \"mrp\": 199.99,\r\n    \"stock_qty\": 50,\r\n    \"stock_type\": \"piece\",\r\n    \"image_urls\": \"https://example.com/images/fitness_gear/adjustable_dumbbells_set.jpg\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base}}/products/products/create",
+									"host": [
+										"{{base}}"
+									],
+									"path": [
+										"products",
+										"products",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"mrp\": 999.99\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base}}/products/products/:id",
+									"host": [
+										"{{base}}"
+									],
+									"path": [
+										"products",
+										"products",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "669561ada94cb5cc480cd228"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "categories",
+					"item": [
+						{
+							"name": "getCategoryById",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base}}/products/categories/:_categoryId",
+									"host": [
+										"{{base}}"
+									],
+									"path": [
+										"products",
+										"categories",
+										":_categoryId"
+									],
+									"variable": [
+										{
+											"key": "_categoryId",
+											"value": "6695614ca94cb5cc480cd221"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getCategories",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base}}/products/categories?page=1&limit=10",
+									"host": [
+										"{{base}}"
+									],
+									"path": [
+										"products",
+										"categories"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "productCategoryCreare",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201 Created\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response should have product ID\", function () {\r",
+											"    pm.expect(pm.response.json()).to.have.property('_id');\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Dataset:\r",
+											"const productCategories = [\r",
+											"    {\r",
+											"      name: \"Shoes\",\r",
+											"      description: \"Step into comfort and style with our extensive collection of shoes. Find the perfect pair for every occasion, from casual to formal.\"\r",
+											"    }\r",
+											"];\r",
+											"\r",
+											"// Fetch base URL from environment variables\r",
+											"const baseUrl = pm.environment.get('base');\r",
+											"\r",
+											"// Ensure base URL is defined and not empty\r",
+											"if (!baseUrl) {\r",
+											"    console.error(\"Base URL is not defined in environment variables.\");\r",
+											"    pm.abortRequest();\r",
+											"}\r",
+											"\r",
+											"// Set the relative endpoint path (this could be dynamically set or fixed in Postman)\r",
+											"const endpointPath = '/products/categories/create'; // Replace with your actual endpoint path\r",
+											"\r",
+											"const currentProduct = productCategories[0];\r",
+											"\r",
+											"// Set request URL dynamically\r",
+											"pm.request.url = `${baseUrl}${endpointPath}`;\r",
+											"\r",
+											"// Set request body\r",
+											"pm.request.body.raw = JSON.stringify(currentProduct);\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base}}/products/categories/create",
+									"host": [
+										"{{base}}"
+									],
+									"path": [
+										"products",
+										"categories",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Fitness Gear -II\",\r\n    \"description\": \"Gear up for your workout with our fitness equipment. Find everything you need to stay active and healthy, from apparel to accessories.\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base}}/products/categories/:id",
+									"host": [
+										"{{base}}"
+									],
+									"path": [
+										"products",
+										"categories",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "6695614ca94cb5cc480cd221",
+											"description": "MongoId: category.id"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
