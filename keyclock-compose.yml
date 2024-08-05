@@ -1,0 +1,60 @@
+services:
+
+  mysql_db:
+    build:
+      context: infra/mysql_db/
+      dockerfile: Dockerfile
+    container_name: mysql_db_container
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:23.0.5
+    command: [
+      "start",
+      "--cache=local",
+      "--https-port=9443",
+      "--http-port=8080",
+      "--https-certificate-file=/srv/docker/keycloak/data/certs/tls.crt",
+      "--https-certificate-key-file=/srv/docker/keycloak/data/certs/tls.key",
+      "--https-trust-store-file=/srv/docker/keycloak/data/certs/server.keystore",
+      "--https-trust-store-password=strong123password"
+      "--hostname=https://kbauth.realfantasyteams.com",
+      ]
+    container_name: keycloak
+    ports:
+      - "3000:8080"  # Keycloak will be available at http://localhost:8080
+      - "8443:8443"
+    depends_on:
+      - mysql_db
+    volumes:
+      - ./etc/letsencrypt/live/kbauth.realfantasyteams.com/fullchain.pem:/srv/docker/keycloak/data/certs/tls.crt
+      - ./etc/letsencrypt/live/kbauth.realfantasyteams.com/privkey.pem:/srv/docker/keycloak/data/certs/tls.key
+      - ./home/ubuntu/keystore.jks:/srv/docker/keycloak/data/certs/server.keystore
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin  # Change these credentials as needed
+      - DB_VENDOR=mysql
+      - DB_ADDR=mysql
+      - DB_DATABASE=keycloak_db
+      - DB_USER=test_user
+      - DB_PASSWORD=test_pwd
+      - KC_PROXY=reencrypt
+      # - PROXY_ADDRESS_FORWARDING=true
+      # - HTTPS_CERTIFICATE_FILE=/srv/docker/keycloak/data/certs/tls.crt
+      # - HTTPS_CERTIFICATE_KEY_FILE=/srv/docker/keycloak/data/certs/tls.key
+      # - HOSTNAME=https://kbauth.realfantasyteams.com
+      # - SPI_STICKY_SESSION_ENCODER_INFINISPAN_SHOULD_ATTACH_ROUTE=true
+
+# openssl pkcs12 -export -in /etc/letsencrypt/live/kbauth.realfantasyteams.com/fullchain.pem -inkey /etc/letsencrypt/live/kbauth.realfantasyteams.com/privkey.pem -out keystore.p12 -name keycloak
+# keytool -importkeystore -deststorepass strong123password -destkeypass strong123password -destkeystore keystore.jks -srckeystore keystore.p12 -srcstoretype PKCS12 -srcstorepass strong123password -alias keycloak
+
+      
